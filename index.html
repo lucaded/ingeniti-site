@@ -1,0 +1,2458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>inGeniti</title>
+<meta name="description" content="OPTIMA by inGeniti coordinates every electrical device on the grid. Monitor, control, and optimize distributed load at utility scale." />
+<meta name="theme-color" content="#FAFAF7" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --hairline: rgba(0, 0, 0, 0.08);
+    --hairline-2: rgba(0, 0, 0, 0.14);
+    --ink: #0A0A0B;
+    --ink-2: #52525B;
+    --ink-3: #A1A1AA;
+    --accent: #DC1F26;
+
+    --display: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+    --mono: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    --container: 1280px;
+    --gutter: 32px;
+    --section-y: 128px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  body { overflow-x: hidden; }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; font-size: inherit; }
+  img, svg { display: block; max-width: 100%; }
+  input, textarea, select { font-family: inherit; color: inherit; }
+
+  ::selection { background: var(--accent); color: #ffffff; }
+
+  :focus { outline: none; }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+    transition: outline-offset 160ms ease;
+  }
+  html { scroll-padding-top: 84px; }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .sr-only:focus {
+    position: fixed;
+    top: 12px; left: 12px;
+    width: auto; height: auto;
+    padding: 10px 16px;
+    margin: 0;
+    clip: auto;
+    background: var(--accent);
+    color: #ffffff;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0;
+    z-index: 100;
+  }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .section { padding: var(--section-y) 0; }
+  .section + .section { position: relative; }
+  .section + .section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--hairline-2);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 900ms cubic-bezier(.22, 1, .36, 1);
+    z-index: 2;
+  }
+  .section + .section.line-in::before { transform: scaleX(1); }
+  @media (prefers-reduced-motion: reduce) {
+    .section + .section::before { transform: scaleX(1); transition: none; }
+  }
+
+  @media (max-width: 768px) {
+    :root { --section-y: 72px; --gutter: 20px; }
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--ink-2);
+    display: inline-block;
+  }
+
+  h1, h2, h3, h4, p, ul, ol { margin: 0; padding: 0; }
+  ul { list-style: none; }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.94;
+    font-size: 48px;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  h2, h3 { text-wrap: balance; }
+  @media (min-width: 768px)  { h1 { font-size: 72px; } }
+  @media (min-width: 1200px) { h1 { font-size: 96px; } }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    font-size: 32px;
+    color: var(--ink);
+  }
+  @media (min-width: 768px)  { h2 { font-size: 48px; } }
+  @media (min-width: 1200px) { h2 { font-size: 60px; } }
+
+  h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-size: 22px;
+    color: var(--ink);
+  }
+
+  .serif-em {
+    font-family: var(--display);
+    font-style: normal;
+    font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.02em;
+  }
+
+  .body-prose {
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 62ch;
+  }
+  .lede {
+    color: var(--ink);
+    font-size: 20px;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
+    max-width: 62ch;
+  }
+  @media (min-width: 1024px) {
+    .lede { font-size: 22px; }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: var(--ink);
+    color: #ffffff;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .btn:hover { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+  .btn .arr { transition: transform 160ms ease; }
+  .btn:hover .arr { transform: translateX(2px); }
+
+  .link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--hairline-2);
+    transition: color 160ms ease, border-color 160ms ease, gap 160ms ease;
+  }
+  .link:hover { color: var(--accent); border-bottom-color: var(--accent); gap: 14px; }
+
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 200ms ease, transform 200ms ease;
+    will-change: opacity, transform;
+  }
+  [data-reveal].in { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+    .hero-title .serif-em { opacity: 1; animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* SCROLL PROGRESS BAR */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    z-index: 60;
+    pointer-events: none;
+  }
+  .scroll-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transform-origin: left center;
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 72px;
+    background: rgba(250, 250, 247, 0.85);
+    backdrop-filter: saturate(1.2) blur(8px);
+    -webkit-backdrop-filter: saturate(1.2) blur(8px);
+    z-index: 40;
+    border-bottom: 1px solid transparent;
+    transition: border-color 160ms ease;
+  }
+  .nav.scrolled { border-bottom-color: var(--hairline); }
+  .nav-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+  }
+  .brand img {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+  .live-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-left: 10px;
+    animation: live-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.6; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .live-dot { animation: none; }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    opacity: 0.7;
+    position: relative;
+    padding: 4px 2px;
+    transition: opacity 160ms ease, color 160ms ease;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px; bottom: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 220ms cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links a.active { color: var(--ink); }
+  .nav-links a.active::after { transform: scaleX(1); }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0;
+    color: var(--ink);
+    padding: 8px 14px;
+    border: 1px solid var(--hairline-2);
+    border-radius: 2px;
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .nav-cta:hover { background: var(--ink); color: #ffffff; border-color: var(--ink); }
+
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--hairline-2);
+    color: var(--ink);
+    width: 36px; height: 36px;
+    align-items: center; justify-content: center;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 860px) {
+    .brand img { height: 36px; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-toggle { display: inline-flex; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 72px; left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--hairline);
+      padding: 24px var(--gutter);
+      gap: 16px;
+    }
+  }
+
+  /* HERO */
+  .hero {
+    padding: calc(72px + 96px) 0 128px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  @media (max-width: 768px) {
+    .hero { padding: calc(72px + 56px) 0 72px; }
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 56px;
+    }
+  }
+  .hero-visual {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    margin-left: auto;
+    overflow: hidden;
+  }
+  .hero-visual img {
+    display: block;
+    width: 100%;
+    height: auto;
+    mix-blend-mode: multiply;
+    filter: contrast(1.05) saturate(0.95);
+  }
+  @media (max-width: 1024px) {
+    .hero-visual { max-width: 340px; margin: 0 auto; }
+  }
+  .hero-eyebrow { margin-bottom: 40px; }
+  .hero-title {
+    max-width: 14ch;
+    margin-bottom: 32px;
+  }
+  .hero-title .serif-em {
+    opacity: 0;
+    display: inline-block;
+    animation: heroFade 220ms ease 100ms forwards;
+  }
+  @keyframes heroFade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-sub {
+    max-width: 58ch;
+    margin-bottom: 48px;
+    color: var(--ink-2);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  @media (min-width: 1024px) { .hero-sub { font-size: 20px; } }
+  .hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .metrics-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 40px;
+    height: 52px;
+    padding: 0 18px;
+    background: transparent;
+    border: 1px solid var(--hairline-2);
+    border-radius: 999px;
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .metrics-pill__item { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .metrics-pill__divider { width: 1px; height: 18px; background: var(--hairline-2); flex: 0 0 auto; }
+  .metrics-pill__dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .metrics-pill__dot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: metrics-pill-pulse 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    transform-origin: center;
+    pointer-events: none;
+  }
+  @keyframes metrics-pill-pulse {
+    0%   { transform: scale(1);   opacity: 0.6; }
+    80%  { transform: scale(2.6); opacity: 0; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .metrics-pill__dot::after { animation: none; display: none; }
+  }
+
+  /* NUMBERS STRIP */
+  .numbers { padding: 64px 0; }
+  .numbers-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .num {
+    padding: 48px 32px 48px 0;
+    border-right: 1px solid var(--hairline);
+  }
+  .num:nth-child(4n) { border-right: 0; padding-right: 0; }
+  .num-value {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 18px;
+    transform-origin: left bottom;
+  }
+  @media (min-width: 768px)  { .num-value { font-size: 72px; } }
+  @media (min-width: 1200px) { .num-value { font-size: 88px; } }
+  .num-value.lime { color: var(--accent); }
+
+  .num-value {
+    transform: scale(0.35);
+    opacity: 0;
+    transition: transform 1100ms cubic-bezier(.22, 1, .36, 1),
+                opacity 500ms ease;
+  }
+  .num[data-reveal].in .num-value { transform: scale(1); opacity: 1; }
+  .num:nth-child(1) .num-value { transition-delay: 0ms, 0ms; }
+  .num:nth-child(2) .num-value { transition-delay: 140ms, 140ms; }
+  .num:nth-child(3) .num-value { transition-delay: 280ms, 280ms; }
+  .num:nth-child(4) .num-value { transition-delay: 420ms, 420ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .num-value { transform: none; opacity: 1; transition: none; }
+  }
+  .num-label {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .num-note {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    max-width: 28ch;
+  }
+  @media (max-width: 1024px) {
+    .numbers-inner { grid-template-columns: repeat(2, 1fr); }
+    .num { padding: 32px 24px 32px 0; }
+    .num:nth-child(2n) { border-right: 0; padding-right: 0; }
+    .num:nth-child(-n+2) { border-bottom: 1px solid var(--hairline); }
+  }
+  @media (max-width: 520px) {
+    .numbers-inner { grid-template-columns: 1fr; }
+    .num { padding: 28px 0; border-right: 0; border-bottom: 1px solid var(--hairline); }
+    .num:last-child { border-bottom: 0; }
+  }
+
+  /* RECOGNITION STRIP */
+  .recognition {
+    padding: 64px 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .rec-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .rec {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    padding: 8px 40px;
+    border-right: 1px solid var(--hairline);
+    align-items: center;
+  }
+  .rec:first-child { padding-left: 0; }
+  .rec:last-child  { padding-right: 0; border-right: 0; }
+  .rec-num {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .rec-label {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
+  }
+  .rec-note {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.45;
+  }
+  @media (max-width: 900px) {
+    .rec-row { grid-template-columns: 1fr; }
+    .rec { padding: 16px 0; border-right: 0; border-bottom: 1px solid var(--hairline); }
+    .rec:last-child { border-bottom: 0; }
+  }
+
+  /* PROBLEM */
+  .problem-copy {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+    font-size: 34px;
+    color: var(--ink);
+    max-width: 22ch;
+  }
+  @media (min-width: 768px)  { .problem-copy { font-size: 48px; max-width: 20ch; } }
+  @media (min-width: 1200px) { .problem-copy { font-size: 64px; max-width: 18ch; } }
+  .problem-copy .serif-em { color: var(--ink); }
+  #solution .body-prose { font-size: 17px; line-height: 1.6; max-width: 58ch; }
+
+  /* PRODUCT DIAGRAM */
+  .diagram-head { max-width: 62ch; margin-bottom: 56px; }
+  .diagram-head .eyebrow { margin-bottom: 24px; }
+  .diagram-head h2 { margin-bottom: 24px; }
+  /* SOLUTION SECTION with photo as subtle atmospheric background */
+  .solution-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: 160px;
+    padding-bottom: 160px;
+  }
+  .solution-section > .container { position: relative; z-index: 1; }
+  .solution-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .solution-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.42;
+    filter: saturate(0.6) contrast(0.94) brightness(1.02);
+    mask-image: linear-gradient(180deg,
+      transparent 0%,
+      rgba(0,0,0,0.5) 8%,
+      rgba(0,0,0,1) 22%,
+      rgba(0,0,0,1) 78%,
+      rgba(0,0,0,0.5) 92%,
+      transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg,
+      transparent 0%,
+      rgba(0,0,0,0.5) 8%,
+      rgba(0,0,0,1) 22%,
+      rgba(0,0,0,1) 78%,
+      rgba(0,0,0,0.5) 92%,
+      transparent 100%);
+  }
+  .solution-section .diagram-head { margin-bottom: 48px; }
+  .solution-strip {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 24px 0;
+    margin-top: 56px;
+    border-top: 1px solid var(--hairline-2);
+    border-bottom: 1px solid var(--hairline-2);
+    color: var(--ink);
+  }
+  .solution-strip-tag {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: 0.01em;
+  }
+  .solution-strip-line {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    flex: 1 1 auto;
+    min-width: 200px;
+  }
+  .solution-strip-stat {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: -0.005em;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-2);
+  }
+  .solution-strip-stat::before {
+    content: "";
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  @media (max-width: 768px) {
+    .solution-section { padding-top: 96px; padding-bottom: 96px; }
+  }
+
+  /* PRODUCT SHOWCASE */
+  .showcase-head { margin-bottom: 56px; max-width: 62ch; }
+  .showcase-head .eyebrow { margin-bottom: 24px; }
+  .showcase-head h2 { margin-bottom: 24px; }
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1.55fr 0.45fr;
+    gap: 48px;
+    align-items: flex-end;
+  }
+  .showcase-web {
+    border: 1px solid var(--hairline-2);
+    overflow: hidden;
+    background: var(--surface);
+    aspect-ratio: 16 / 10;
+    box-shadow: 0 18px 40px -20px rgba(0,0,0,0.18), 0 2px 6px -2px rgba(0,0,0,0.06);
+  }
+  .showcase-web svg { display: block; width: 100%; height: auto; }
+  .showcase-mobile svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 18px 28px rgba(0,0,0,0.08)) drop-shadow(0 4px 10px rgba(0,0,0,0.05));
+  }
+  .showcase-caption {
+    margin-top: 16px;
+    font-size: 12px;
+    color: var(--ink-2);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+  @keyframes showcase-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(1.6); }
+  }
+  .showcase-web .pulse-ring {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: showcase-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes showcase-tick {
+    0%, 45% { opacity: 1; }
+    50%, 95% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  .showcase-web .cursor { animation: showcase-tick 1.2s steps(1) infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .showcase-web .pulse-ring,
+    .showcase-web .cursor { animation: none; }
+  }
+  @media (max-width: 1024px) {
+    .showcase-grid { grid-template-columns: 1fr; gap: 48px; align-items: stretch; }
+    .showcase-mobile { max-width: 320px; margin: 0 auto; width: 100%; }
+  }
+
+  /* WHO */
+  .who-head { margin-bottom: 72px; max-width: 62ch; }
+  .who-head .eyebrow { margin-bottom: 24px; }
+  .who-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .who-col {
+    padding: 64px 56px 64px 0;
+    border-right: 1px solid var(--hairline);
+  }
+  .who-col:last-child { border-right: 0; padding-right: 0; padding-left: 56px; }
+  .who-col h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 36px;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .who-col > p {
+    color: var(--ink-2);
+    font-size: 17px;
+    line-height: 1.6;
+    max-width: 44ch;
+    margin-bottom: 44px;
+  }
+  .who-list { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
+  .who-list li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 28px;
+    padding: 22px 0;
+    border-top: 1px solid var(--hairline);
+    align-items: baseline;
+  }
+  .who-list li:last-child { border-bottom: 1px solid var(--hairline); }
+  .who-num {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .who-fact {
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  @media (max-width: 900px) {
+    .who-grid { grid-template-columns: 1fr; border-top: 1px solid var(--hairline); }
+    .who-col { padding: 40px 0; border-right: 0; border-bottom: 1px solid var(--hairline); }
+    .who-col:last-child { padding-left: 0; border-bottom: 0; }
+    .who-list li { grid-template-columns: 140px 1fr; }
+  }
+  @media (max-width: 520px) {
+    .who-list li { grid-template-columns: 1fr; gap: 4px; }
+    .who-label { padding-top: 0; }
+  }
+
+  /* TAXONOMY */
+  .tax-head { margin-bottom: 64px; max-width: 62ch; }
+  .tax-head .eyebrow { margin-bottom: 24px; }
+  .tax-head h2 { margin-bottom: 24px; }
+  .tax-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+  .tax-card {
+    border-top: 1px solid var(--hairline-2);
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .tax-tag {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .tax-tag .rd {
+    color: var(--accent);
+    letter-spacing: 0;
+  }
+  .tax-visual {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-bottom: 20px;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    overflow: hidden;
+    transition: border-color 240ms ease, box-shadow 240ms ease;
+  }
+  .rd-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    padding: 4px 8px;
+    border-radius: 999px;
+    z-index: 1;
+  }
+  .tax-card:hover .tax-visual {
+    border-color: var(--hairline-2);
+    box-shadow: 0 14px 28px -20px rgba(0,0,0,0.16);
+  }
+  .tax-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    padding: 6%;
+    transition: transform 400ms cubic-bezier(.4,0,.2,1);
+  }
+  .tax-card:hover .tax-visual img {
+    transform: scale(1.04);
+  }
+  .tax-visual svg {
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+  }
+
+  /* TAX PICKER */
+  .tax-picker {
+    margin-top: 56px;
+    margin-bottom: 0;
+    padding: 20px 0;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .tax-picker-label {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+  .tax-picker-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .tax-pill {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    padding: 9px 16px;
+    border: 1px solid var(--hairline-2);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 999px;
+    transition: background 180ms ease, color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+  .tax-pill:hover { border-color: var(--ink); transform: translateY(-1px); }
+  .tax-pill.active {
+    background: var(--ink);
+    color: #ffffff;
+    border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+  .tax-rationale {
+    display: grid;
+    grid-template-rows: 0fr;
+    max-width: 780px;
+    margin: 0;
+    transition: grid-template-rows 360ms cubic-bezier(.4, 0, .2, 1),
+                margin 360ms cubic-bezier(.4, 0, .2, 1);
+  }
+  .tax-rationale.show {
+    grid-template-rows: 1fr;
+    margin: 24px 0 32px;
+  }
+  .tax-rationale-inner {
+    overflow: hidden;
+    min-height: 0;
+    padding: 0 24px;
+    background: var(--surface);
+    border: 0 solid var(--hairline);
+    border-left: 3px solid var(--accent);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 260ms ease,
+                transform 320ms cubic-bezier(.4, 0, .2, 1),
+                padding 320ms cubic-bezier(.4, 0, .2, 1),
+                border-width 320ms cubic-bezier(.4, 0, .2, 1);
+  }
+  .tax-rationale.show .tax-rationale-inner {
+    opacity: 1;
+    transform: translateX(0);
+    padding: 24px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    transition: opacity 260ms ease 120ms,
+                transform 320ms cubic-bezier(.4, 0, .2, 1) 80ms,
+                padding 320ms cubic-bezier(.4, 0, .2, 1),
+                border-width 320ms cubic-bezier(.4, 0, .2, 1);
+  }
+  .result-thumb {
+    flex: 0 0 120px;
+    aspect-ratio: 4 / 3;
+    background: var(--bg);
+    border: 1px solid var(--hairline);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .result-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8%;
+    display: block;
+  }
+  .result-body {
+    min-width: 0;
+    flex: 1;
+  }
+  .result-name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .result-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  @media (max-width: 640px) {
+    .tax-rationale-inner { flex-direction: column; align-items: flex-start; }
+    .result-thumb { flex: 0 0 auto; width: 60%; max-width: 200px; }
+  }
+
+  @keyframes card-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(220,31,38,0.5); transform: translateY(0); }
+    20%  { box-shadow: 0 0 0 8px rgba(220,31,38,0.32); transform: translateY(-5px); }
+    70%  { box-shadow: 0 0 0 20px rgba(220,31,38,0); transform: translateY(-2px); }
+    100% { box-shadow: 0 0 0 0 rgba(220,31,38,0); transform: translateY(0); }
+  }
+  .tax-card.pulse { animation: card-pulse 1.6s cubic-bezier(.4,0,.2,1) 2; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tax-rationale,
+    .tax-rationale-inner { transition: none !important; }
+    .tax-card.pulse { animation: none; }
+  }
+
+  @media (max-width: 640px) {
+    .tax-picker { flex-direction: column; align-items: flex-start; }
+  }
+  .tax-name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 12px;
+    line-height: 1.05;
+  }
+  .tax-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin-bottom: 28px;
+    flex: 1;
+  }
+  .tax-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+  }
+  .tax-metric .k {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+    margin-bottom: 4px;
+  }
+  .tax-metric .v {
+    font-family: var(--display);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  @media (max-width: 1200px) { .tax-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px)  { .tax-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px)  { .tax-grid { grid-template-columns: 1fr; } }
+
+  /* TEAM */
+  .team-head { margin-bottom: 64px; max-width: 62ch; }
+  .team-head .eyebrow { margin-bottom: 24px; }
+  .team-head h2 { margin-bottom: 24px; }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px 32px;
+  }
+  .person { display: flex; flex-direction: column; }
+  .person-sq {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--hairline-2);
+    background:
+      linear-gradient(135deg, rgba(220,31,38,0.04) 0%, rgba(220,31,38,0) 60%),
+      var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--display);
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 22px;
+    transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
+  }
+  .person:hover .person-sq {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .person-sq.conf {
+    font-family: var(--sans);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--ink-3);
+    background: var(--surface);
+  }
+  .person-name {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .person-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+  }
+  .person-bio {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  @media (max-width: 1024px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px)  { .team-grid { grid-template-columns: 1fr; } }
+
+  /* FINAL CTA + FORM */
+  .final-head {
+    font-family: var(--display);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.0;
+    font-size: 44px;
+    color: var(--ink);
+    max-width: 20ch;
+    margin-bottom: 48px;
+  }
+  @media (min-width: 768px)  { .final-head { font-size: 72px; } }
+  @media (min-width: 1200px) { .final-head { font-size: 96px; } }
+
+  .form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 780px;
+    margin-top: 48px;
+  }
+  .form-field { display: flex; flex-direction: column; }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--ink-2);
+    margin-bottom: 10px;
+  }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    padding: 14px 4px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--hairline-2);
+    border-radius: 0;
+    color: var(--ink);
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    transition: border-color 200ms ease, padding-left 200ms ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: var(--ink-2); opacity: 0.65; }
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-bottom-color: var(--accent);
+    border-bottom-width: 2px;
+    padding-left: 8px;
+    padding-bottom: 13px;
+  }
+  .form-select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+    padding-right: 28px;
+    cursor: pointer;
+  }
+  .form-select option { background: var(--bg); color: var(--ink); }
+  .form-textarea {
+    min-height: 96px;
+    resize: vertical;
+    padding: 12px 0 14px;
+    line-height: 1.5;
+  }
+  .form-submit {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline);
+    flex-wrap: wrap;
+  }
+  .form-submit .btn {
+    padding: 16px 28px;
+    font-size: 15px;
+  }
+  .form-note {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+  }
+  .form-success {
+    grid-column: 1 / -1;
+    display: none;
+    padding: 16px 0;
+    font-size: 14px;
+    color: var(--accent);
+    border-top: 1px solid var(--hairline);
+  }
+  .form-success.show { display: block; }
+  @media (max-width: 640px) {
+    .form { grid-template-columns: 1fr; }
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 72px 0 32px;
+    border-top: 1px solid var(--hairline);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .footer-brand {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .footer-brand img {
+    height: 56px;
+    width: auto;
+    display: block;
+  }
+  .footer-tag {
+    max-width: 36ch;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+  .footer-creds {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+  }
+  .footer-creds span {
+    padding: 4px 10px;
+    border: 1px solid var(--hairline-2);
+    border-radius: 999px;
+  }
+  .footer-col h4 {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+  .footer-col a {
+    font-size: 14px;
+    color: var(--ink-2);
+    transition: color 160ms ease;
+  }
+  .footer-col a:hover { color: var(--ink); }
+  .footer-col li.plain {
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .footer-bottom {
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+  }
+  @media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<a class="sr-only" href="#main">Skip to content</a>
+
+<div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-fill" id="scrollProgressFill"></div></div>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="inGeniti home">
+      <img src="logo-wordmark-light.png" alt="inGeniti" />
+      <span class="live-dot" aria-hidden="true"></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#solution">Platform</a></li>
+      <li><a href="#who">Customers</a></li>
+      <li><a href="#products">Hardware</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a class="nav-cta" href="#contact">Contact</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="3" y1="7" x2="21" y2="7"/>
+          <line x1="3" y1="17" x2="21" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- 01 HERO -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-eyebrow" data-reveal>
+          <span class="eyebrow">OPTIMA by inGeniti</span>
+        </div>
+        <h1 class="hero-title" data-reveal>
+          Unified energy. <span class="serif-em">Any device.</span> Anywhere.
+        </h1>
+        <p class="hero-sub" data-reveal>
+          OPTIMA turns ten billion distributed devices into a coordinated grid resource. Cuts utility program capex by 80% and puts control back in customers&rsquo; hands.
+        </p>
+        <div class="metrics-pill" role="group" aria-label="Live fleet status" data-reveal>
+          <span class="metrics-pill__item" aria-label="Live">
+            <span class="metrics-pill__dot" aria-hidden="true"></span>
+            <span>Live</span>
+          </span>
+          <span class="metrics-pill__divider" aria-hidden="true"></span>
+          <span class="metrics-pill__item">1,247 devices managed</span>
+          <span class="metrics-pill__divider" aria-hidden="true"></span>
+          <span class="metrics-pill__item">14.3 MW dispatched</span>
+        </div>
+        <div class="hero-cta" data-reveal>
+          <a class="btn" href="#contact">
+            Contact
+            <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+          <a class="link" href="#products">
+            Platform
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual" data-reveal>
+        <img src="hero-grid.png" alt="OPTIMA coordinates distributed energy devices across the grid" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 NUMBERS -->
+<section class="numbers" aria-label="Key metrics">
+  <div class="container">
+    <div class="numbers-inner">
+      <div class="num" data-reveal>
+        <div class="num-value">80%</div>
+        <div class="num-label">Program capex cut</div>
+        <div class="num-note">Demand response programs that cost $3M deploy at ~$600K.</div>
+      </div>
+      <div class="num" data-reveal>
+        <div class="num-value">6&times;</div>
+        <div class="num-label">Faster to deploy</div>
+        <div class="num-note">Versus conventional integration approaches.</div>
+      </div>
+      <div class="num" data-reveal>
+        <div class="num-value">25%</div>
+        <div class="num-label">Average energy saved</div>
+        <div class="num-note">For residential heating, cooling and EV charging with no discomfort.</div>
+      </div>
+      <div class="num" data-reveal>
+        <div class="num-value lime">10B</div>
+        <div class="num-label">Addressable devices</div>
+        <div class="num-note">Mid-to-high power electrical devices worldwide.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 RECOGNITION -->
+<section class="recognition" aria-label="Recognition">
+  <div class="container">
+    <div class="rec-row">
+      <div class="rec" data-reveal>
+        <div class="rec-num">Top 25</div>
+        <div class="rec-body">
+          <div class="rec-label">EPRI Technology Innovation</div>
+          <div class="rec-note">Electric Power Research Institute selection.</div>
+        </div>
+      </div>
+      <div class="rec" data-reveal>
+        <div class="rec-num">Grant</div>
+        <div class="rec-body">
+          <div class="rec-label">NREL Recipient</div>
+          <div class="rec-note">National Renewable Energy Laboratory award.</div>
+        </div>
+      </div>
+      <div class="rec" data-reveal>
+        <div class="rec-num">Pending</div>
+        <div class="rec-body">
+          <div class="rec-label">US Patents Filed</div>
+          <div class="rec-note">Hardware, software, and coordination protocol claims.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PROBLEM -->
+<section class="section" id="solution">
+  <div class="container">
+    <div style="margin-bottom:48px;" data-reveal>
+      <span class="eyebrow">Problem</span>
+    </div>
+    <h2 class="problem-copy" data-reveal>
+      The grid&rsquo;s biggest untapped asset is <span class="serif-em">stranded</span>.
+    </h2>
+    <p class="body-prose" data-reveal style="margin-top:24px; max-width:62ch;">
+      Billions of devices sit disconnected from any unified control plane. An enormous pool of latent grid capacity. Every utility is running the same play against the same wall: custom point product deployments that cost too much, take too long, and fragment on the first integration. Meanwhile, the grid keeps getting more stressed.
+    </p>
+  </div>
+</section>
+
+<!-- 05 SOLUTION (photo-as-background section) -->
+<section class="section solution-section" aria-labelledby="platform-heading">
+  <div class="solution-bg" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=2400&q=85" alt="" loading="lazy" />
+  </div>
+  <div class="container">
+    <div class="diagram-head" data-reveal>
+      <span class="eyebrow">The Solution</span>
+      <h2 id="platform-heading">One platform for <span class="serif-em">every device.</span> Every program.</h2>
+      <p class="body-prose">OPTIMA is the unified layer between the utility control room and the customer&rsquo;s devices. The one the industry has been trying to build for a decade. Hardware, software, and communications purpose built so a utility can standardize on a single DER control plane, and ship programs at one fifth the cost, six times faster.</p>
+    </div>
+    <div class="solution-strip" data-reveal>
+      <span class="solution-strip-tag">OPTIMA coordination layer</span>
+      <span class="solution-strip-line">Ten billion devices. Any voltage. Any site.</span>
+      <span class="solution-strip-stat">Monitor &middot; Control &middot; Optimize</span>
+    </div>
+  </div>
+</section>
+
+<!-- 05B PRODUCT SHOWCASE -->
+<section class="section" aria-labelledby="product-heading">
+  <div class="container">
+    <div class="showcase-head" data-reveal>
+      <span class="eyebrow">Product</span>
+      <h2 id="product-heading">Operators on web. <span class="serif-em">Customers on mobile.</span></h2>
+      <p class="body-prose">One platform, two experiences. A utility dispatch console for program managers and a consumer app that gives residents real-time insight and full override authority.</p>
+    </div>
+    <div class="showcase-grid">
+      <div data-reveal>
+        <div class="showcase-web">
+          <svg viewBox="0 0 1600 1000" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif" aria-label="OPTIMA dispatch console mockup">
+            <rect width="1600" height="1000" fill="#FAFAF7"></rect>
+            <rect x="0" y="0" width="1600" height="72" fill="#0A0A0B"></rect>
+            <g transform="translate(40, 36)">
+              <rect x="0" y="-11" width="22" height="22" fill="#DC1F26"></rect>
+              <text x="34" y="6" font-size="17" font-weight="600" fill="#FAFAF7" letter-spacing="1.4">OPTIMA</text>
+              <line x1="130" y1="-14" x2="130" y2="14" stroke="#333" stroke-width="1"></line>
+              <text x="146" y="5" font-size="12" font-weight="500" fill="#8a8a8a" letter-spacing="0.3">Energy Orchestration Platform</text>
+            </g>
+            <g transform="translate(720, 41)" font-size="12" font-weight="500" fill="#8a8a8a" letter-spacing="0.2">
+              <text x="0" y="0" fill="#FAFAF7">Operations</text>
+              <line x1="-14" y1="14" x2="74" y2="14" stroke="#DC1F26" stroke-width="1.5"></line>
+              <text x="96" y="0">Programs</text>
+              <text x="184" y="0">Devices</text>
+              <text x="260" y="0">Forecasts</text>
+              <text x="348" y="0">Settlement</text>
+            </g>
+            <g transform="translate(1560, 41)" text-anchor="end" font-size="12" font-weight="500" fill="#8a8a8a">
+              <text x="-180" y="0" fill="#FAFAF7">ISO-NE &#183; Zone 3</text>
+              <text x="0" y="0" font-family="ui-monospace, Menlo, monospace" fill="#FAFAF7">14:32:07 EDT</text>
+              <text x="0" y="-18" font-size="9" letter-spacing="0.8">LIVE<tspan class="cursor">_</tspan></text>
+            </g>
+            <g transform="translate(40, 110)" font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="1.4">
+              <text x="0" y="0">DISPATCH CONSOLE</text>
+              <text x="1520" y="0" text-anchor="end">REFRESHED 00:02 AGO</text>
+              <line x1="0" y1="14" x2="1520" y2="14" stroke="#111" stroke-width="1"></line>
+            </g>
+            <g transform="translate(40, 150)">
+              <rect width="750" height="360" fill="#ffffff" stroke="#E8E6DE" stroke-width="1"></rect>
+              <g transform="translate(28, 34)">
+                <text font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="1.4">01 &#8212; FLEET STATUS</text>
+                <text x="694" text-anchor="end" font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="0.8">T+125ms</text>
+              </g>
+              <g transform="translate(28, 72)">
+                <circle cx="6" cy="6" r="5" fill="#DC1F26" class="pulse-ring"></circle>
+                <circle cx="6" cy="6" r="4" fill="#DC1F26"></circle>
+                <text x="22" y="10" font-size="11" font-weight="600" fill="#111" letter-spacing="1.2">ONLINE</text>
+              </g>
+              <g transform="translate(28, 190)">
+                <text font-size="108" font-weight="600" fill="#111" letter-spacing="-4">1,247</text>
+                <text x="0" y="40" font-size="13" font-weight="500" fill="#6a6a6a">devices online &#183; of 1,289 enrolled</text>
+              </g>
+              <line x1="420" y1="120" x2="420" y2="330" stroke="#E8E6DE" stroke-width="1"></line>
+              <g transform="translate(452, 138)">
+                <text font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="1.4">MW UNDER MANAGEMENT</text>
+                <text y="72" font-size="72" font-weight="600" fill="#111" letter-spacing="-2">84.3</text>
+                <text x="188" y="72" font-size="22" font-weight="500" fill="#6a6a6a">MW</text>
+                <g transform="translate(0, 110)" font-size="11" fill="#6a6a6a" font-weight="500">
+                  <line x1="0" y1="0" x2="260" y2="0" stroke="#E8E6DE"></line>
+                  <text x="0" y="22">Dispatchable</text>
+                  <text x="260" y="22" text-anchor="end" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">112.8 MW</text>
+                  <line x1="0" y1="40" x2="260" y2="40" stroke="#E8E6DE"></line>
+                  <text x="0" y="62">Curtailable load</text>
+                  <text x="260" y="62" text-anchor="end" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">48.1 MW</text>
+                  <line x1="0" y1="80" x2="260" y2="80" stroke="#E8E6DE"></line>
+                  <text x="0" y="102">Avg response</text>
+                  <text x="260" y="102" text-anchor="end" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">3.2 s</text>
+                  <line x1="0" y1="120" x2="260" y2="120" stroke="#E8E6DE"></line>
+                </g>
+              </g>
+            </g>
+            <g transform="translate(810, 150)">
+              <rect width="750" height="360" fill="#ffffff" stroke="#E8E6DE" stroke-width="1"></rect>
+              <g transform="translate(28, 34)">
+                <text font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="1.4">02 &#8212; LOAD CURVE &#183; LAST 24h</text>
+                <text x="694" text-anchor="end" font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="0.8">MW</text>
+              </g>
+              <g transform="translate(28, 66)" font-size="11" font-weight="500" fill="#111">
+                <line x1="0" y1="0" x2="20" y2="0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="3 3"></line>
+                <text x="28" y="4">Baseline forecast</text>
+                <line x1="160" y1="0" x2="180" y2="0" stroke="#DC1F26" stroke-width="2"></line>
+                <text x="188" y="4">Dispatched load</text>
+                <text x="694" y="4" text-anchor="end" fill="#6a6a6a">&#916; Peak shave &#8722;18.4 MW</text>
+              </g>
+              <g font-size="10" font-weight="500" fill="#8a8a8a" font-family="ui-monospace, Menlo, monospace">
+                <text x="22" y="104" text-anchor="end">120</text>
+                <text x="22" y="159" text-anchor="end">100</text>
+                <text x="22" y="214" text-anchor="end">80</text>
+                <text x="22" y="269" text-anchor="end">60</text>
+                <text x="22" y="324" text-anchor="end">40</text>
+              </g>
+              <g stroke="#EFEDE5" stroke-width="1">
+                <line x1="28" y1="100" x2="722" y2="100"></line>
+                <line x1="28" y1="155" x2="722" y2="155"></line>
+                <line x1="28" y1="210" x2="722" y2="210"></line>
+                <line x1="28" y1="265" x2="722" y2="265"></line>
+                <line x1="28" y1="320" x2="722" y2="320"></line>
+              </g>
+              <polyline fill="none" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="3 3" points="28,245 57,258 86,268 115,274 144,268 173,252 202,228 231,205 260,188 289,178 318,172 347,168 376,165 405,160 434,152 463,142 492,128 521,115 550,108 579,112 608,125 637,150 666,185 695,215 722,232"></polyline>
+              <polyline fill="none" stroke="#DC1F26" stroke-width="2" points="28,248 57,260 86,270 115,275 144,270 173,254 202,230 231,208 260,192 289,182 318,176 347,172 376,170 405,166 434,158 463,152 492,148 521,152 550,156 579,160 608,168 637,182 666,198 695,220 722,235"></polyline>
+              <rect x="492" y="100" width="108" height="220" fill="#DC1F26" fill-opacity="0.05"></rect>
+              <line x1="492" y1="100" x2="492" y2="320" stroke="#DC1F26" stroke-width="1" stroke-dasharray="2 3" opacity="0.5"></line>
+              <line x1="600" y1="100" x2="600" y2="320" stroke="#DC1F26" stroke-width="1" stroke-dasharray="2 3" opacity="0.5"></line>
+              <text x="546" y="94" text-anchor="middle" font-size="9" font-weight="600" fill="#DC1F26" letter-spacing="1.2">DISPATCH</text>
+              <line x1="666" y1="86" x2="666" y2="320" stroke="#111" stroke-width="1"></line>
+              <circle cx="666" cy="198" r="3" fill="#DC1F26"></circle>
+              <text x="666" y="80" text-anchor="middle" font-size="9" font-weight="600" fill="#111" letter-spacing="1.2">NOW</text>
+              <g font-size="10" font-weight="500" fill="#8a8a8a" font-family="ui-monospace, Menlo, monospace">
+                <line x1="28" y1="320" x2="722" y2="320" stroke="#111" stroke-width="1"></line>
+                <text x="28" y="338" text-anchor="middle">14:00</text>
+                <text x="144" y="338" text-anchor="middle">18:00</text>
+                <text x="260" y="338" text-anchor="middle">22:00</text>
+                <text x="376" y="338" text-anchor="middle">02:00</text>
+                <text x="492" y="338" text-anchor="middle">06:00</text>
+                <text x="608" y="338" text-anchor="middle">10:00</text>
+                <text x="722" y="338" text-anchor="middle">14:32</text>
+              </g>
+            </g>
+            <g transform="translate(40, 530)">
+              <rect width="750" height="430" fill="#ffffff" stroke="#E8E6DE" stroke-width="1"></rect>
+              <g transform="translate(28, 34)">
+                <text font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="1.4">03 &#8212; ACTIVE PROGRAMS</text>
+                <text x="694" text-anchor="end" font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="0.8">3 RUNNING</text>
+              </g>
+              <g transform="translate(28, 78)" font-size="10" font-weight="500" fill="#8a8a8a" letter-spacing="1.2">
+                <text x="0" y="0">PROGRAM</text>
+                <text x="360" y="0">STATUS</text>
+                <text x="540" y="0">PARTICIPANTS</text>
+                <text x="694" y="0" text-anchor="end">MW</text>
+                <line x1="0" y1="14" x2="694" y2="14" stroke="#E8E6DE"></line>
+              </g>
+              <g transform="translate(28, 130)">
+                <text font-size="20" font-weight="600" fill="#111" letter-spacing="-0.3">Peak Shaving &#8212; Summer Tier 2</text>
+                <text y="26" font-size="12" font-weight="500" fill="#6a6a6a">Residential A/C setpoint offset &#183; +3&#176;F ceiling</text>
+                <g transform="translate(360, -16)">
+                  <rect width="100" height="24" fill="#DC1F26"></rect>
+                  <circle cx="12" cy="12" r="3" fill="#FAFAF7"></circle>
+                  <text x="22" y="16" font-size="10" font-weight="600" fill="#FAFAF7" letter-spacing="1.2">DISPATCHING</text>
+                </g>
+                <text x="540" y="0" font-size="20" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">8,412</text>
+                <text x="540" y="20" font-size="11" font-weight="500" fill="#6a6a6a">of 9,100 opted in</text>
+                <text x="694" y="0" text-anchor="end" font-size="20" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">52.1</text>
+                <line x1="0" y1="50" x2="694" y2="50" stroke="#E8E6DE"></line>
+              </g>
+              <g transform="translate(28, 220)">
+                <text font-size="20" font-weight="600" fill="#111" letter-spacing="-0.3">C&amp;I Interruptible &#8212; Industrial North</text>
+                <text y="26" font-size="12" font-weight="500" fill="#6a6a6a">HVAC + process load shed &#183; 30-minute notice</text>
+                <g transform="translate(360, -16)">
+                  <rect width="100" height="24" fill="none" stroke="#111" stroke-width="1"></rect>
+                  <circle cx="12" cy="12" r="3" fill="#111"></circle>
+                  <text x="22" y="16" font-size="10" font-weight="600" fill="#111" letter-spacing="1.2">ARMED</text>
+                </g>
+                <text x="540" y="0" font-size="20" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">186</text>
+                <text x="540" y="20" font-size="11" font-weight="500" fill="#6a6a6a">facilities standing by</text>
+                <text x="694" y="0" text-anchor="end" font-size="20" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">24.8</text>
+                <line x1="0" y1="50" x2="694" y2="50" stroke="#E8E6DE"></line>
+              </g>
+              <g transform="translate(28, 310)">
+                <text font-size="20" font-weight="600" fill="#111" letter-spacing="-0.3">BYOD Battery Pool &#8212; Coastal</text>
+                <text y="26" font-size="12" font-weight="500" fill="#6a6a6a">Home battery discharge to grid &#183; capacity contracts</text>
+                <g transform="translate(360, -16)">
+                  <rect width="100" height="24" fill="none" stroke="#8a8a8a" stroke-width="1"></rect>
+                  <circle cx="12" cy="12" r="3" fill="#8a8a8a"></circle>
+                  <text x="22" y="16" font-size="10" font-weight="600" fill="#6a6a6a" letter-spacing="1.2">STANDBY</text>
+                </g>
+                <text x="540" y="0" font-size="20" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">2,143</text>
+                <text x="540" y="20" font-size="11" font-weight="500" fill="#6a6a6a">batteries available</text>
+                <text x="694" y="0" text-anchor="end" font-size="20" font-weight="600" fill="#111" font-family="ui-monospace, Menlo, monospace">7.4</text>
+              </g>
+              <g transform="translate(28, 388)" font-size="11" font-weight="500" fill="#6a6a6a">
+                <line x1="0" y1="-16" x2="694" y2="-16" stroke="#111"></line>
+                <text x="0" y="0" letter-spacing="1.2">TOTAL COMMITTED</text>
+                <text x="694" y="0" text-anchor="end" fill="#111" font-weight="600" font-family="ui-monospace, Menlo, monospace">84.3 MW &#183; 10,741 assets</text>
+              </g>
+            </g>
+            <g transform="translate(810, 530)">
+              <rect width="750" height="430" fill="#ffffff" stroke="#E8E6DE" stroke-width="1"></rect>
+              <g transform="translate(28, 34)">
+                <text font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="1.4">04 &#8212; DEVICE CLASS MIX</text>
+                <text x="694" text-anchor="end" font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="0.8">1,247 DEVICES</text>
+              </g>
+              <g transform="translate(220, 240)">
+                <g transform="rotate(-90)">
+                  <circle r="120" fill="none" stroke="#DC1F26" stroke-width="44" stroke-dasharray="241.27 753.98" stroke-dashoffset="0"></circle>
+                  <circle r="120" fill="none" stroke="#111111" stroke-width="44" stroke-dasharray="180.95 753.98" stroke-dashoffset="-241.27"></circle>
+                  <circle r="120" fill="none" stroke="#6a6a6a" stroke-width="44" stroke-dasharray="165.88 753.98" stroke-dashoffset="-422.22"></circle>
+                  <circle r="120" fill="none" stroke="#B8B5A8" stroke-width="44" stroke-dasharray="105.56 753.98" stroke-dashoffset="-588.10"></circle>
+                  <circle r="120" fill="none" stroke="#E8E6DE" stroke-width="44" stroke-dasharray="60.32 753.98" stroke-dashoffset="-693.66"></circle>
+                </g>
+                <text y="-6" text-anchor="middle" font-size="10" font-weight="500" fill="#6a6a6a" letter-spacing="1.2">ENROLLED</text>
+                <text y="26" text-anchor="middle" font-size="34" font-weight="600" fill="#111" letter-spacing="-1">1,247</text>
+              </g>
+              <g transform="translate(420, 110)" font-size="12" fill="#111">
+                <g font-size="10" font-weight="500" fill="#8a8a8a" letter-spacing="1.2">
+                  <text x="32" y="0">CLASS</text>
+                  <text x="220" y="0" text-anchor="end">UNITS</text>
+                  <text x="288" y="0" text-anchor="end">SHARE</text>
+                  <line x1="0" y1="10" x2="288" y2="10" stroke="#E8E6DE"></line>
+                </g>
+                <g transform="translate(0, 46)">
+                  <rect width="18" height="18" y="-14" fill="#DC1F26"></rect>
+                  <text x="32" y="0" font-weight="600">Safe-4</text>
+                  <text x="32" y="18" font-size="10" fill="#6a6a6a" font-weight="500">Smart thermostat &#183; residential</text>
+                  <text x="220" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">399</text>
+                  <text x="288" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">32%</text>
+                </g>
+                <g transform="translate(0, 106)">
+                  <rect width="18" height="18" y="-14" fill="#111111"></rect>
+                  <text x="32" y="0" font-weight="600">Safe-12</text>
+                  <text x="32" y="18" font-size="10" fill="#6a6a6a" font-weight="500">Heat pump &#183; whole-home</text>
+                  <text x="220" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">299</text>
+                  <text x="288" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">24%</text>
+                </g>
+                <g transform="translate(0, 166)">
+                  <rect width="18" height="18" y="-14" fill="#6a6a6a"></rect>
+                  <text x="32" y="0" font-weight="600">Latch-20</text>
+                  <text x="32" y="18" font-size="10" fill="#6a6a6a" font-weight="500">EV charger &#183; L2 curtailment</text>
+                  <text x="220" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">274</text>
+                  <text x="288" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">22%</text>
+                </g>
+                <g transform="translate(0, 226)">
+                  <rect width="18" height="18" y="-14" fill="#B8B5A8"></rect>
+                  <text x="32" y="0" font-weight="600">Shelter</text>
+                  <text x="32" y="18" font-size="10" fill="#6a6a6a" font-weight="500">Water heater &#183; tank resistive</text>
+                  <text x="220" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">175</text>
+                  <text x="288" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">14%</text>
+                </g>
+                <g transform="translate(0, 286)">
+                  <rect width="18" height="18" y="-14" fill="#E8E6DE" stroke="#B8B5A8" stroke-width="1"></rect>
+                  <text x="32" y="0" font-weight="600">Vault</text>
+                  <text x="32" y="18" font-size="10" fill="#6a6a6a" font-weight="500">Battery storage &#183; BYOD</text>
+                  <text x="220" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">100</text>
+                  <text x="288" y="0" text-anchor="end" font-weight="600" font-family="ui-monospace, Menlo, monospace">8%</text>
+                </g>
+                <line x1="0" y1="302" x2="288" y2="302" stroke="#111"></line>
+              </g>
+            </g>
+            <g transform="translate(40, 982)" font-size="10" font-weight="500" fill="#8a8a8a" letter-spacing="1.2">
+              <text x="0" y="0">v4.12.0 &#183; BUILD 2f8a91c</text>
+              <text x="760" y="0" text-anchor="middle">DISPATCH AUTHORITY &#183; OPERATOR K. MORALES</text>
+              <text x="1520" y="0" text-anchor="end">TELEMETRY OK &#183; LATENCY 42ms</text>
+            </g>
+          </svg>
+        </div>
+        <div class="showcase-caption">
+          <span>Utility dispatch console</span>
+          <span>Live sample data</span>
+        </div>
+      </div>
+      <div class="showcase-mobile" data-reveal>
+        <svg viewBox="0 0 450 950" xmlns="http://www.w3.org/2000/svg" aria-label="OPTIMA customer app mockup">
+          <defs>
+            <clipPath id="screenClip"><rect x="20" y="20" width="410" height="910" rx="54" ry="54"></rect></clipPath>
+            <clipPath id="chartClip"><rect x="44" y="600" width="362" height="112" rx="18" ry="18"></rect></clipPath>
+            <linearGradient id="bezelGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1F1A17"></stop>
+              <stop offset="1" stop-color="#0E0A08"></stop>
+            </linearGradient>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#DC1F26" stop-opacity="0.32"></stop>
+              <stop offset="1" stop-color="#DC1F26" stop-opacity="0.02"></stop>
+            </linearGradient>
+          </defs>
+          <rect x="8" y="8" width="434" height="934" rx="64" ry="64" fill="url(#bezelGrad)"></rect>
+          <rect x="14" y="14" width="422" height="922" rx="60" ry="60" fill="#000"></rect>
+          <rect x="20" y="20" width="410" height="910" rx="54" ry="54" fill="#FAF7F3"></rect>
+          <rect x="4" y="180" width="4" height="50" rx="2" fill="#0A0706"></rect>
+          <rect x="4" y="250" width="4" height="90" rx="2" fill="#0A0706"></rect>
+          <rect x="4" y="350" width="4" height="90" rx="2" fill="#0A0706"></rect>
+          <rect x="442" y="240" width="4" height="130" rx="2" fill="#0A0706"></rect>
+          <g clip-path="url(#screenClip)">
+            <g font-family="Inter, system-ui, sans-serif">
+              <text x="54" y="58" font-size="17" font-weight="700" fill="#1A1613">9:41</text>
+              <rect x="170" y="36" width="110" height="30" rx="15" fill="#0A0706"></rect>
+              <g fill="#1A1613" transform="translate(336,54)">
+                <rect x="0" y="-4" width="3" height="4" rx="0.5"></rect>
+                <rect x="5" y="-7" width="3" height="7" rx="0.5"></rect>
+                <rect x="10" y="-10" width="3" height="10" rx="0.5"></rect>
+                <rect x="15" y="-13" width="3" height="13" rx="0.5"></rect>
+              </g>
+              <g transform="translate(390,44)">
+                <rect x="0" y="0" width="26" height="12" rx="3" fill="none" stroke="#1A1613" stroke-width="1.2" opacity="0.7"></rect>
+                <rect x="27" y="4" width="2" height="4" rx="0.5" fill="#1A1613" opacity="0.7"></rect>
+                <rect x="2" y="2" width="22" height="8" rx="1.5" fill="#1A1613"></rect>
+              </g>
+            </g>
+            <g font-family="Inter, system-ui, sans-serif">
+              <text x="38" y="120" font-size="11" font-weight="700" letter-spacing="3" fill="#8A7F73">OPTIMA</text>
+              <text x="38" y="158" font-size="30" font-weight="700" fill="#1A1613">Hello, Bart</text>
+              <text x="38" y="184" font-size="14" font-weight="400" fill="#6B6158">Three devices online &#183; all systems normal</text>
+              <circle cx="390" cy="150" r="22" fill="#F0E9DE"></circle>
+              <text x="390" y="157" text-anchor="middle" font-size="14" font-weight="700" fill="#6B6158">B</text>
+            </g>
+            <g font-family="Inter, system-ui, sans-serif">
+              <text x="38" y="228" font-size="12" font-weight="700" letter-spacing="2" fill="#8A7F73">DEVICES</text>
+              <text x="412" y="228" text-anchor="end" font-size="12" font-weight="500" fill="#DC1F26">Manage</text>
+            </g>
+            <g transform="translate(28,244)">
+              <rect x="0" y="0" width="394" height="72" rx="20" fill="#FFFFFF" stroke="#EFE8DD" stroke-width="1"></rect>
+              <rect x="14" y="14" width="44" height="44" rx="12" fill="#FBEDEE"></rect>
+              <g transform="translate(36,36)" fill="#DC1F26" stroke="none">
+                <circle cx="0" cy="0" r="3"></circle>
+                <path d="M0,-10 C4,-7 4,-4 0,-2 C-4,-4 -4,-7 0,-10 Z"></path>
+                <path d="M10,0 C7,4 4,4 2,0 C4,-4 7,-4 10,0 Z"></path>
+                <path d="M0,10 C-4,7 -4,4 0,2 C4,4 4,7 0,10 Z"></path>
+                <path d="M-10,0 C-7,-4 -4,-4 -2,0 C-4,4 -7,4 -10,0 Z"></path>
+              </g>
+              <text x="74" y="34" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#1A1613">HVAC Main</text>
+              <circle cx="80" cy="52" r="4" fill="#DC1F26"></circle>
+              <text x="90" y="56" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#6B6158">Cooling &#183; 68&#176;F</text>
+              <g transform="translate(328,22)">
+                <rect x="0" y="0" width="52" height="28" rx="14" fill="#DC1F26"></rect>
+                <circle cx="38" cy="14" r="11" fill="#FFFFFF"></circle>
+              </g>
+            </g>
+            <g transform="translate(28,328)">
+              <rect x="0" y="0" width="394" height="72" rx="20" fill="#FFFFFF" stroke="#EFE8DD" stroke-width="1"></rect>
+              <rect x="14" y="14" width="44" height="44" rx="12" fill="#FBEDEE"></rect>
+              <g transform="translate(36,36)">
+                <rect x="-8" y="-9" width="16" height="14" rx="4" fill="#DC1F26"></rect>
+                <circle cx="-3" cy="-4" r="1.4" fill="#FBEDEE"></circle>
+                <circle cx="3" cy="-4" r="1.4" fill="#FBEDEE"></circle>
+                <path d="M0,5 L0,10" stroke="#DC1F26" stroke-width="2" stroke-linecap="round"></path>
+              </g>
+              <text x="74" y="34" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#1A1613">EV Charger</text>
+              <circle cx="80" cy="52" r="4" fill="#DC1F26"></circle>
+              <text x="90" y="56" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#6B6158">Charging &#183; 62% &#183; 7.2 kW</text>
+              <g transform="translate(328,22)">
+                <rect x="0" y="0" width="52" height="28" rx="14" fill="#DC1F26"></rect>
+                <circle cx="38" cy="14" r="11" fill="#FFFFFF"></circle>
+              </g>
+            </g>
+            <g transform="translate(28,412)">
+              <rect x="0" y="0" width="394" height="72" rx="20" fill="#FFFFFF" stroke="#EFE8DD" stroke-width="1"></rect>
+              <rect x="14" y="14" width="44" height="44" rx="12" fill="#F3ECE0"></rect>
+              <g transform="translate(36,36)" fill="#8A7F73">
+                <path d="M0,-11 C6,-4 9,0 9,4 A9,9 0 0 1 -9,4 C-9,0 -6,-4 0,-11 Z"></path>
+              </g>
+              <text x="74" y="34" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="700" fill="#1A1613">Water Heater</text>
+              <circle cx="80" cy="52" r="4" fill="#DC1F26"></circle>
+              <text x="90" y="56" font-family="Inter, system-ui, sans-serif" font-size="12" fill="#6B6158">Standby &#183; 124&#176;F</text>
+              <g transform="translate(328,22)">
+                <rect x="0" y="0" width="52" height="28" rx="14" fill="#E8E1D5"></rect>
+                <circle cx="14" cy="14" r="11" fill="#FFFFFF"></circle>
+              </g>
+            </g>
+            <g font-family="Inter, system-ui, sans-serif">
+              <text x="38" y="540" font-size="12" font-weight="700" letter-spacing="2" fill="#8A7F73">TODAY&rsquo;S USAGE</text>
+              <text x="412" y="540" text-anchor="end" font-size="12" font-weight="500" fill="#6B6158">kWh</text>
+            </g>
+            <rect x="28" y="552" width="394" height="180" rx="22" fill="#FFFFFF" stroke="#EFE8DD" stroke-width="1"></rect>
+            <g font-family="Inter, system-ui, sans-serif">
+              <text x="44" y="586" font-size="28" font-weight="700" fill="#1A1613">12.4</text>
+              <text x="110" y="586" font-size="13" font-weight="500" fill="#6B6158">kWh &#183; today</text>
+              <g transform="translate(340,572)">
+                <rect x="0" y="0" width="66" height="22" rx="11" fill="#FBEDEE"></rect>
+                <path d="M10,15 L14,10 L18,13 L22,8" fill="none" stroke="#DC1F26" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                <text x="28" y="15" font-size="11" font-weight="700" fill="#DC1F26">&#8722;18%</text>
+              </g>
+            </g>
+            <g clip-path="url(#chartClip)">
+              <g stroke="#F0E9DE" stroke-width="1">
+                <line x1="44" y1="630" x2="406" y2="630"></line>
+                <line x1="44" y1="660" x2="406" y2="660"></line>
+                <line x1="44" y1="690" x2="406" y2="690"></line>
+              </g>
+              <path d="M 44,700 L 44,682 C 70,678 80,690 100,686 C 120,682 135,660 160,655 C 185,650 200,670 225,662 C 250,654 265,628 295,622 C 320,618 335,640 360,632 C 380,625 395,612 406,618 L 406,700 Z" fill="url(#areaGrad)"></path>
+              <path d="M 44,682 C 70,678 80,690 100,686 C 120,682 135,660 160,655 C 185,650 200,670 225,662 C 250,654 265,628 295,622 C 320,618 335,640 360,632 C 380,625 395,612 406,618" fill="none" stroke="#DC1F26" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="406" cy="618" r="4" fill="#FFFFFF" stroke="#DC1F26" stroke-width="2"></circle>
+            </g>
+            <g font-family="Inter, system-ui, sans-serif" font-size="10" fill="#A89D91">
+              <text x="48" y="724">6a</text>
+              <text x="130" y="724">10a</text>
+              <text x="218" y="724">2p</text>
+              <text x="306" y="724">6p</text>
+              <text x="390" y="724" text-anchor="end">now</text>
+            </g>
+            <g transform="translate(28,752)">
+              <rect x="0" y="0" width="190" height="68" rx="18" fill="#FFFFFF" stroke="#EFE8DD"></rect>
+              <text x="18" y="26" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#8A7F73">TODAY</text>
+              <text x="18" y="54" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="#1A1613">12.4<tspan font-size="13" font-weight="500" fill="#6B6158" dx="4">kWh</tspan></text>
+            </g>
+            <g transform="translate(232,752)">
+              <rect x="0" y="0" width="190" height="68" rx="18" fill="#DC1F26"></rect>
+              <text x="18" y="26" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="2" fill="#F7C8CA">SAVED</text>
+              <text x="18" y="54" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">3.1<tspan font-size="13" font-weight="500" fill="#FBEDEE" dx="4">kWh</tspan></text>
+            </g>
+            <rect x="20" y="850" width="410" height="80" fill="#FFFFFF"></rect>
+            <line x1="28" y1="850" x2="422" y2="850" stroke="#EFE8DD" stroke-width="1"></line>
+            <g transform="translate(60,868)">
+              <g stroke="#DC1F26" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2,18 L8,12 L13,15 L20,6"></path>
+                <circle cx="20" cy="6" r="1.6" fill="#DC1F26"></circle>
+              </g>
+              <text x="11" y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="700" fill="#DC1F26">Monitor</text>
+              <rect x="-4" y="-14" width="30" height="3" rx="1.5" fill="#DC1F26"></rect>
+            </g>
+            <g transform="translate(200,868)">
+              <g stroke="#8A7F73" stroke-width="2" fill="none" stroke-linecap="round">
+                <circle cx="6" cy="12" r="4"></circle>
+                <line x1="0" y1="12" x2="2" y2="12"></line>
+                <line x1="10" y1="12" x2="24" y2="12"></line>
+                <circle cx="18" cy="4" r="4"></circle>
+                <line x1="0" y1="4" x2="14" y2="4"></line>
+                <line x1="22" y1="4" x2="24" y2="4"></line>
+              </g>
+              <text x="12" y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500" fill="#8A7F73">Control</text>
+            </g>
+            <g transform="translate(338,868)">
+              <g stroke="#8A7F73" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12,2 L14,10 L22,12 L14,14 L12,22 L10,14 L2,12 L10,10 Z"></path>
+              </g>
+              <text x="12" y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500" fill="#8A7F73">Optimize</text>
+            </g>
+            <rect x="165" y="915" width="120" height="5" rx="2.5" fill="#1A1613"></rect>
+          </g>
+        </svg>
+        <div class="showcase-caption">
+          <span>Customer app</span>
+          <span>iOS &amp; Android</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 WHO -->
+<section class="section" id="who">
+  <div class="container">
+    <div class="who-head" data-reveal>
+      <span class="eyebrow">For Utilities and Customers</span>
+      <h2>Built for both sides of the meter. <span class="serif-em">Utilities and customers.</span></h2>
+      <p class="body-prose" style="margin-top:20px;">We sell to utilities. They reach millions of customers. Everyone wins. The economics finally work for both.</p>
+    </div>
+    <div class="who-grid">
+
+      <div class="who-col" data-reveal>
+        <h3>Utilities.</h3>
+        <p>Run demand response, efficiency, and virtual power plant programs at a price the regulator approves.</p>
+        <ul class="who-list">
+          <li><span class="who-num">80%</span><span class="who-fact">Capex reduction versus legacy integration</span></li>
+          <li><span class="who-num">6&times;</span><span class="who-fact">Faster to deploy than conventional approaches</span></li>
+          <li><span class="who-num">$600K</span><span class="who-fact">Programs that cost $3M ship at this price</span></li>
+          <li><span class="who-num">Open</span><span class="who-fact">One control fabric, every asset class</span></li>
+        </ul>
+      </div>
+
+      <div class="who-col" data-reveal>
+        <h3>Commercial and industrial.</h3>
+        <p>Cut energy bills, participate in grid programs, and keep full authority over every device on site.</p>
+        <ul class="who-list">
+          <li><span class="who-num">25%</span><span class="who-fact">Average energy saved on heating, cooling, and EV charging</span></li>
+          <li><span class="who-num">10&times;</span><span class="who-fact">Lower cost than native smart appliances</span></li>
+          <li><span class="who-num">Live</span><span class="who-fact">Telemetry per device, per circuit</span></li>
+          <li><span class="who-num">Full</span><span class="who-fact">The operator retains ultimate control, always</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FIT FINDER -->
+<section class="section" id="fit-finder">
+  <div class="container">
+    <div class="tax-head" data-reveal>
+      <span class="eyebrow">Find your fit</span>
+      <h2>Match a load <span class="serif-em">to a class.</span></h2>
+      <p class="body-prose">Tell us what you&rsquo;re plugging in. We&rsquo;ll point you to the right hardware, then you can see the full lineup below.</p>
+    </div>
+
+    <div class="tax-picker" data-reveal>
+      <span class="tax-picker-label">I need to control:</span>
+      <div class="tax-picker-pills" role="tablist" aria-label="Device class picker">
+        <button type="button" class="tax-pill" data-target="safe-4">Appliances, lighting</button>
+        <button type="button" class="tax-pill" data-target="safe-12">EV, heat pumps, water heaters</button>
+        <button type="button" class="tax-pill" data-target="latch-20">Hardwired panel loads</button>
+        <button type="button" class="tax-pill" data-target="shelter-15-50">Commercial HVAC, refrigeration</button>
+        <button type="button" class="tax-pill" data-target="vault">Microgrid coordinator</button>
+      </div>
+    </div>
+
+    <div class="tax-rationale" id="taxRationale" aria-live="polite">
+      <div class="tax-rationale-inner" id="taxRationaleInner"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 TAXONOMY -->
+<section class="section" id="products">
+  <div class="container">
+    <div class="tax-head" data-reveal>
+      <span class="eyebrow">Our Platform</span>
+      <h2>Five tiers of hardware. <span class="serif-em">One software fabric.</span></h2>
+      <p class="body-prose">Purpose built hardware for every voltage and environment, from a plug in residential module to a utility scale microgrid node. All orchestrated through one cloud platform.</p>
+    </div>
+
+    <div class="tax-grid" id="taxGrid">
+
+      <article class="tax-card" data-reveal data-class="safe-4">
+        <div class="tax-visual">
+          <img src="safe-4-original-bg.png" alt="inGeniti Safe-4 module" loading="lazy" />
+        </div>
+        <div class="tax-name">Safe-4</div>
+        <p class="tax-desc">Low power plug in module for appliances, small HVAC, and lighting on a single phase circuit.</p>
+        <div class="tax-metrics">
+          <div class="tax-metric"><div class="k">Power</div><div class="v">4 kW</div></div>
+          <div class="tax-metric"><div class="k">Form</div><div class="v">Plugged</div></div>
+        </div>
+      </article>
+
+      <article class="tax-card" data-reveal data-class="safe-12">
+        <div class="tax-visual">
+          <img src="safe-12-original-bg.png" alt="inGeniti Safe-12 module" loading="lazy" />
+        </div>
+        <div class="tax-name">Safe-12</div>
+        <p class="tax-desc">Mid power plug in for EV chargers, heat pumps, water heaters, and pool equipment on two phase circuits.</p>
+        <div class="tax-metrics">
+          <div class="tax-metric"><div class="k">Power</div><div class="v">12 kW</div></div>
+          <div class="tax-metric"><div class="k">Form</div><div class="v">Plugged</div></div>
+        </div>
+      </article>
+
+      <article class="tax-card" data-reveal data-class="latch-20">
+        <div class="tax-visual">
+          <span class="rd-badge">In R&amp;D</span>
+          <img src="latch-20-original-bg.png" alt="inGeniti Latch-20 panel intercept" loading="lazy" />
+        </div>
+        <div class="tax-name">Latch-20</div>
+        <p class="tax-desc">Panel intercept for hardwired loads, installed directly at the breaker for single phase and phase to phase circuits.</p>
+        <div class="tax-metrics">
+          <div class="tax-metric"><div class="k">Power</div><div class="v">20 kW</div></div>
+          <div class="tax-metric"><div class="k">Form</div><div class="v">Hardwired</div></div>
+        </div>
+      </article>
+
+      <article class="tax-card" data-reveal data-class="shelter-15-50">
+        <div class="tax-visual">
+          <img src="shelter-15-50-original-bg.png" alt="inGeniti Shelter-15/50 industrial node" loading="lazy" />
+        </div>
+        <div class="tax-name">Shelter-15/50</div>
+        <p class="tax-desc">Three phase node for commercial HVAC, refrigeration, pumping, and light manufacturing loads.</p>
+        <div class="tax-metrics">
+          <div class="tax-metric"><div class="k">Power</div><div class="v">15 / 50 kW</div></div>
+          <div class="tax-metric"><div class="k">Form</div><div class="v">Panel mount</div></div>
+        </div>
+      </article>
+
+      <article class="tax-card" data-reveal data-class="vault">
+        <div class="tax-visual">
+          <img src="vault-original-bg.png" alt="inGeniti Vault microgrid coordinator" loading="lazy" />
+        </div>
+        <div class="tax-name">Vault</div>
+        <p class="tax-desc">Microgrid coordinator with external current transformers and contactor support, scaling to any load.</p>
+        <div class="tax-metrics">
+          <div class="tax-metric"><div class="k">Power</div><div class="v">Any</div></div>
+          <div class="tax-metric"><div class="k">Role</div><div class="v">Coordinator</div></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- 08 TEAM -->
+<section class="section" id="team">
+  <div class="container">
+    <div class="team-head" data-reveal>
+      <span class="eyebrow">About Us</span>
+      <h2>20+ years of lived expertise. <span class="serif-em">Three prior exits.</span></h2>
+      <p class="body-prose">A founding team that combines deep technical craft with decades of operating experience across utilities, enterprises, and global energy policy.</p>
+    </div>
+
+    <div class="team-grid">
+
+      <div class="person" data-reveal>
+        <div class="person-sq">BS</div>
+        <div class="person-name">Bhartendu (Bart) Sinha</div>
+        <div class="person-role">Founder &amp; CEO</div>
+        <p class="person-bio">An energy technology pioneer. Founder and leader at Geovas, Ambrado, and AutoGrid (all acquired). Creator of transformative technology products and industry first solutions across energy, water, telecom, and digital.</p>
+      </div>
+
+      <div class="person" data-reveal>
+        <div class="person-sq">RK</div>
+        <div class="person-name">Reji Kumar Pillai</div>
+        <div class="person-role">Primary Advisor</div>
+        <p class="person-bio">Global energy technology leader and pioneer of smart grids, renewables, energy storage, and electric mobility. Chairman, GSEF and president, India Smart Grid Forum. Advisor to multiple leading international energy organizations and national grid policy bodies.</p>
+      </div>
+
+      <div class="person" data-reveal>
+        <div class="person-sq">FF</div>
+        <div class="person-name">Francie Woll Finn</div>
+        <div class="person-role">Chief of Business</div>
+        <p class="person-bio">40+ years selling and consulting across energy tech, government, utilities, industrial clients, and media.</p>
+      </div>
+
+      <div class="person" data-reveal>
+        <div class="person-sq">SR</div>
+        <div class="person-name">Sadashiv Rudra Prasad</div>
+        <div class="person-role">Chief of Finance &middot; President India</div>
+        <p class="person-bio">30+ years in finance and investments, with deep ties to India&rsquo;s energy leadership.</p>
+      </div>
+
+      <div class="person" data-reveal>
+        <div class="person-sq">MM</div>
+        <div class="person-name">Max Madrian</div>
+        <div class="person-role">Strategy &amp; Partnerships</div>
+        <p class="person-bio">Startup and consulting experience; wide international exposure. Stanford and Notre Dame.</p>
+      </div>
+
+      <div class="person" data-reveal>
+        <div class="person-sq conf">//</div>
+        <div class="person-name">Confidential</div>
+        <div class="person-role">Chief of Product &middot; Delivery</div>
+        <p class="person-bio">Global energy product manager at a Fortune 100; leads multiple smart grid applications there.</p>
+      </div>
+
+      <div class="person" data-reveal>
+        <div class="person-sq conf">//</div>
+        <div class="person-name">Confidential</div>
+        <div class="person-role">Chief of Software</div>
+        <p class="person-bio">Smart energy architect and solution leader at a Fortune 100 energy giant; earlier led software delivery at a top analytics firm.</p>
+      </div>
+
+      <div class="person" data-reveal>
+        <div class="person-sq conf">//</div>
+        <div class="person-name">Confidential</div>
+        <div class="person-role">Chief of Hardware</div>
+        <p class="person-bio">Top smart meter architect and hardware expert; designed and manufactured an industry best meter with millions of units deployed.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 09 FINAL CTA + FORM -->
+<section class="section" id="contact">
+  <div class="container">
+    <div data-reveal style="margin-bottom:32px;">
+      <span class="eyebrow">Contact</span>
+    </div>
+    <h2 class="final-head" data-reveal>
+      Let&rsquo;s rebuild the grid, <span class="serif-em">one device at a time.</span>
+    </h2>
+    <p class="body-prose" data-reveal style="margin-top:-24px; margin-bottom:32px; max-width:62ch;">
+      Whether you&rsquo;re running a pilot, evaluating platforms, or partnering on deployment &mdash; our team will respond within one business day.
+    </p>
+    <form class="form" id="contactForm" onsubmit="return handleSubmit(event)" data-reveal novalidate>
+      <div class="form-field">
+        <label class="form-label" for="f-name">Name</label>
+        <input class="form-input" id="f-name" name="name" type="text" autocomplete="name" required placeholder="Your name" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="f-company">Company</label>
+        <input class="form-input" id="f-company" name="company" type="text" autocomplete="organization" required placeholder="Your company" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="f-email">Email</label>
+        <input class="form-input" id="f-email" name="email" type="email" autocomplete="email" required placeholder="name@company.com" />
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="f-type">You represent</label>
+        <select class="form-select" id="f-type" name="type" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="utility">Utility or aggregator</option>
+          <option value="commercial">Commercial or industrial</option>
+          <option value="oem">OEM or integrator</option>
+          <option value="investor">Investor</option>
+          <option value="press">Press or media</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label class="form-label" for="f-message">Message</label>
+        <textarea class="form-textarea" id="f-message" name="message" required placeholder="A short note on your program, timeline, or question."></textarea>
+      </div>
+      <div class="form-submit">
+        <button class="btn" type="submit">
+          Send
+          <svg class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+        <span class="form-note">Reply within one business day</span>
+      </div>
+      <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+        Message sent. We will be in touch within one business day.
+      </div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="logo-wordmark-light.png" alt="inGeniti" />
+        </div>
+        <p class="footer-tag">Unified energy orchestration. Monitor, control, and optimize any electrical device, anywhere.</p>
+        <div class="footer-creds">
+          <span>EPRI Top 25</span>
+          <span>NREL Grant</span>
+          <span>Patent Pending</span>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#solution">Problem</a></li>
+          <li><a href="#who">Customers</a></li>
+          <li><a href="#products">Hardware</a></li>
+          <li><a href="#team">Team</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#contact">Press</a></li>
+          <li><a href="#contact">Careers</a></li>
+          <li><a href="#contact">Partners</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Office</h4>
+        <ul>
+          <li class="plain">San Francisco, California</li>
+          <li class="plain">Global operations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 inGeniti, Inc.</span>
+      <span>OPTIMA is a registered platform of inGeniti, Inc.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var nav = document.getElementById('nav');
+    var onScroll = function () {
+      if (window.scrollY > 8) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    var toggle = document.getElementById('navToggle');
+    var links = document.getElementById('navLinks');
+    if (toggle && links) {
+      toggle.addEventListener('click', function () {
+        var open = links.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      links.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') {
+          links.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var revealEls = document.querySelectorAll('[data-reveal]');
+    if (reduce || !('IntersectionObserver' in window)) {
+      revealEls.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { io.observe(el); });
+
+      var lineSections = document.querySelectorAll('.section + .section');
+      var lineIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('line-in');
+            lineIo.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+      lineSections.forEach(function (s) { lineIo.observe(s); });
+    }
+
+    var pills = document.querySelectorAll('.tax-pill');
+    var rationale = document.getElementById('taxRationale');
+    var rationaleInner = document.getElementById('taxRationaleInner');
+    var fit = {
+      'safe-4':       { name: 'Safe-4',        img: 'safe-4-original-bg.png',        desc: 'A plug in module rated to 4 kW on a single phase circuit, drops in for appliances, small HVAC, and lighting with no panel work.' },
+      'safe-12':      { name: 'Safe-12',       img: 'safe-12-original-bg.png',       desc: 'A two phase plug in rated to 12 kW for EV chargers, heat pumps, water heaters, and pool equipment.' },
+      'latch-20':     { name: 'Latch-20',      img: 'latch-20-original-bg.png',      desc: 'A hardwired panel intercept for single phase and phase to phase circuits up to 20 kW, installed at the breaker. Currently in R&amp;D.' },
+      'shelter-15-50':{ name: 'Shelter-15/50', img: 'shelter-15-50-original-bg.png', desc: 'A three phase industrial node for commercial HVAC, refrigeration, pumping, and light manufacturing.' },
+      'vault':        { name: 'Vault',         img: 'vault-original-bg.png',         desc: 'Microgrid grade coordinator with external current transformers and contactors, scaling to any load.' }
+    };
+    function renderFit(key) {
+      var f = fit[key];
+      return '<div class="result-thumb"><img src="' + f.img + '" alt=""></div>' +
+             '<div class="result-body">' +
+               '<div class="result-name">' + f.name + '</div>' +
+               '<p class="result-desc">' + f.desc + '</p>' +
+             '</div>';
+    }
+    pills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        var target = pill.getAttribute('data-target');
+        var wasActive = pill.classList.contains('active');
+        pills.forEach(function (p) { p.classList.remove('active'); });
+        if (wasActive) {
+          rationale.classList.remove('show');
+          return;
+        }
+        pill.classList.add('active');
+        if (rationaleInner) rationaleInner.innerHTML = renderFit(target);
+        rationale.classList.add('show');
+        var card = document.querySelector('.tax-card[data-class="' + target + '"]');
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(function () {
+            var prior = document.querySelectorAll('.tax-card.pulse');
+            for (var i = 0; i < prior.length; i++) prior[i].classList.remove('pulse');
+            void card.offsetWidth;
+            card.classList.add('pulse');
+          }, 650);
+        }
+      });
+    });
+
+    // ------- NAV ACTIVE SECTION -------
+    (function () {
+      var navLinks = Array.prototype.slice.call(document.querySelectorAll('#navLinks a[href^="#"]'));
+      if (!navLinks.length) return;
+      var targets = navLinks.map(function (a) {
+        var id = a.getAttribute('href').slice(1);
+        return { link: a, el: document.getElementById(id) };
+      }).filter(function (t) { return t.el; });
+      if (!targets.length) return;
+      function update() {
+        var y = window.scrollY + window.innerHeight * 0.35;
+        var current = null;
+        for (var i = 0; i < targets.length; i++) {
+          var r = targets[i].el.getBoundingClientRect();
+          var top = r.top + window.scrollY;
+          if (y >= top) current = targets[i];
+        }
+        navLinks.forEach(function (a) { a.classList.remove('active'); });
+        if (current) current.link.classList.add('active');
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    // ------- SCROLL PROGRESS -------
+    (function () {
+      var fill = document.getElementById('scrollProgressFill');
+      if (!fill) return;
+      function update() {
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+        fill.style.width = (p * 100).toFixed(2) + '%';
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+
+    // ------- STAT COUNTERS -------
+    (function () {
+      if (reduce) return;
+      var nums = document.querySelectorAll('.num-value');
+      if (!nums.length) return;
+      function parseStat(text) {
+        var m = text.match(/^([^\d]*)(\d+(?:\.\d+)?)([^\d]*)$/);
+        if (!m) return null;
+        return { prefix: m[1], value: parseFloat(m[2]), suffix: m[3], decimals: (m[2].split('.')[1] || '').length };
+      }
+      function animate(el) {
+        var orig = el.textContent.trim();
+        var parsed = parseStat(orig);
+        if (!parsed) return;
+        var duration = 1200;
+        var start = null;
+        function step(ts) {
+          if (start === null) start = ts;
+          var t = Math.min(1, (ts - start) / duration);
+          var e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          var v = parsed.value * e;
+          el.textContent = parsed.prefix + (parsed.decimals ? v.toFixed(parsed.decimals) : Math.round(v)) + parsed.suffix;
+          if (t < 1) requestAnimationFrame(step);
+          else el.textContent = orig;
+        }
+        requestAnimationFrame(step);
+      }
+      var seen = new WeakSet();
+      var statIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !seen.has(entry.target)) {
+            seen.add(entry.target);
+            animate(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      nums.forEach(function (n) { statIo.observe(n); });
+    })();
+
+  })();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    var form = e.target;
+    if (!form.checkValidity()) { form.reportValidity(); return false; }
+    var data = new FormData(form);
+    var subject = encodeURIComponent('inGeniti inquiry from ' + data.get('name') + ' (' + data.get('company') + ')');
+    var body = encodeURIComponent(
+      'Name: ' + data.get('name') + '\n' +
+      'Company: ' + data.get('company') + '\n' +
+      'Email: ' + data.get('email') + '\n' +
+      'Type: ' + data.get('type') + '\n\n' +
+      'Message:\n' + data.get('message')
+    );
+    window.location.href = 'mailto:bhartendu@inGeniti.com?subject=' + subject + '&body=' + body;
+    document.getElementById('formSuccess').classList.add('show');
+    setTimeout(function () {
+      form.reset();
+      document.getElementById('formSuccess').classList.remove('show');
+    }, 4000);
+    return false;
+  }
+  window.handleSubmit = handleSubmit;
+</script>
+
+</body>
+</html>
