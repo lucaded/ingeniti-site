@@ -482,72 +482,132 @@
     .metrics-pill__dot::after { animation: none; display: none; }
   }
 
-  /* NUMBERS STRIP */
-  .numbers { padding: 64px 0; }
-  .numbers-inner {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
+  /* NUMBERS STRIP — scroll-driven zoom */
+  .numbers {
+    position: relative;
+    height: 500vh;
+  }
+  .numbers-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
     border-top: 1px solid var(--hairline);
     border-bottom: 1px solid var(--hairline);
   }
   .num {
-    padding: 48px 32px 48px 0;
-    border-right: 1px solid var(--hairline);
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 4vh 6vw;
+    opacity: var(--opacity, 0);
+    transform: scale(var(--scale, 0.5));
+    transform-origin: center center;
+    will-change: transform, opacity;
+    pointer-events: none;
   }
-  .num:nth-child(4n) { border-right: 0; padding-right: 0; }
+  .num-inner {
+    text-align: center;
+    max-width: min(90vw, 1400px);
+  }
   .num-value {
     font-family: var(--display);
     font-weight: 600;
-    font-size: 56px;
-    line-height: 0.92;
-    letter-spacing: -0.02em;
+    font-size: clamp(9rem, 24vw, 22rem);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
     color: var(--ink);
-    margin-bottom: 18px;
-    transform-origin: left bottom;
-  }
-  @media (min-width: 768px)  { .num-value { font-size: 72px; } }
-  @media (min-width: 1200px) { .num-value { font-size: 88px; } }
-  .num-value.lime { color: var(--accent); }
-
-  .num-value {
-    transform: scale(0.35);
-    opacity: 0;
-    transition: transform 1100ms cubic-bezier(.22, 1, .36, 1),
-                opacity 500ms ease;
-  }
-  .num[data-reveal].in .num-value { transform: scale(1); opacity: 1; }
-  .num:nth-child(1) .num-value { transition-delay: 0ms, 0ms; }
-  .num:nth-child(2) .num-value { transition-delay: 140ms, 140ms; }
-  .num:nth-child(3) .num-value { transition-delay: 280ms, 280ms; }
-  .num:nth-child(4) .num-value { transition-delay: 420ms, 420ms; }
-  @media (prefers-reduced-motion: reduce) {
-    .num-value { transform: none; opacity: 1; transition: none; }
+    margin: 0 0 clamp(16px, 3vh, 40px);
+    display: block;
   }
   .num-label {
     font-family: var(--display);
-    font-size: 13px;
+    font-size: clamp(1rem, 1.4vw, 1.5rem);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--ink);
-    margin-bottom: 6px;
+    margin: 0 0 12px;
   }
   .num-note {
-    font-size: 13px;
+    font-size: clamp(0.95rem, 1.1vw, 1.25rem);
     color: var(--ink-2);
     line-height: 1.55;
-    max-width: 28ch;
+    max-width: 52ch;
+    margin: 0 auto;
   }
+
+  /* Fallback: static grid on tablets/phones */
   @media (max-width: 1024px) {
-    .numbers-inner { grid-template-columns: repeat(2, 1fr); }
-    .num { padding: 32px 24px 32px 0; }
+    .numbers { height: auto; padding: 48px 0; }
+    .numbers-stage {
+      position: static;
+      height: auto;
+      overflow: visible;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      max-width: var(--container);
+      margin: 0 auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+    .num {
+      position: static;
+      inset: auto;
+      display: block;
+      opacity: 1;
+      transform: none;
+      padding: 32px 24px;
+      border-right: 1px solid var(--hairline);
+      pointer-events: auto;
+    }
+    .num:nth-child(2n+1) { padding-left: 0; }
     .num:nth-child(2n) { border-right: 0; padding-right: 0; }
     .num:nth-child(-n+2) { border-bottom: 1px solid var(--hairline); }
+    .num-inner { text-align: left; max-width: none; }
+    .num-value {
+      font-size: 56px;
+      margin: 0 0 18px;
+      letter-spacing: -0.02em;
+    }
+    .num-label {
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      margin-bottom: 6px;
+    }
+    .num-note {
+      font-size: 13px;
+      max-width: 28ch;
+      margin: 0;
+    }
+  }
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .num-value { font-size: 72px; }
   }
   @media (max-width: 520px) {
-    .numbers-inner { grid-template-columns: 1fr; }
-    .num { padding: 28px 0; border-right: 0; border-bottom: 1px solid var(--hairline); }
+    .numbers-stage { grid-template-columns: 1fr; }
+    .num {
+      padding: 28px 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--hairline);
+    }
     .num:last-child { border-bottom: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .numbers { height: auto; padding: 48px 0; }
+    .numbers-stage {
+      position: static;
+      height: auto;
+      overflow: visible;
+    }
+    .num {
+      position: static;
+      inset: auto;
+      opacity: 1;
+      transform: none;
+    }
   }
 
   /* RECOGNITION STRIP */
@@ -1423,25 +1483,31 @@
 
 <!-- 02 NUMBERS -->
 <section class="numbers" aria-label="Key metrics">
-  <div class="container">
-    <div class="numbers-inner">
-      <div class="num" data-reveal>
+  <div class="numbers-stage">
+    <div class="num" data-i="0">
+      <div class="num-inner">
         <div class="num-value">80%</div>
         <div class="num-label">Program capex cut</div>
         <div class="num-note">Demand response programs that cost $3M deploy at ~$600K.</div>
       </div>
-      <div class="num" data-reveal>
+    </div>
+    <div class="num" data-i="1">
+      <div class="num-inner">
         <div class="num-value">6&times;</div>
         <div class="num-label">Faster to deploy</div>
         <div class="num-note">Versus conventional integration approaches.</div>
       </div>
-      <div class="num" data-reveal>
+    </div>
+    <div class="num" data-i="2">
+      <div class="num-inner">
         <div class="num-value">25%</div>
         <div class="num-label">Average energy saved</div>
         <div class="num-note">For residential heating, cooling and EV charging with no discomfort.</div>
       </div>
-      <div class="num" data-reveal>
-        <div class="num-value lime">10B</div>
+    </div>
+    <div class="num" data-i="3">
+      <div class="num-inner">
+        <div class="num-value">10B</div>
         <div class="num-label">Addressable devices</div>
         <div class="num-note">Mid-to-high power electrical devices worldwide.</div>
       </div>
@@ -2389,43 +2455,76 @@
       update();
     })();
 
-    // ------- STAT COUNTERS -------
+    // ------- STATS SCROLL ZOOM -------
     (function () {
-      if (reduce) return;
-      var nums = document.querySelectorAll('.num-value');
-      if (!nums.length) return;
-      function parseStat(text) {
-        var m = text.match(/^([^\d]*)(\d+(?:\.\d+)?)([^\d]*)$/);
-        if (!m) return null;
-        return { prefix: m[1], value: parseFloat(m[2]), suffix: m[3], decimals: (m[2].split('.')[1] || '').length };
-      }
-      function animate(el) {
-        var orig = el.textContent.trim();
-        var parsed = parseStat(orig);
-        if (!parsed) return;
-        var duration = 1200;
-        var start = null;
-        function step(ts) {
-          if (start === null) start = ts;
-          var t = Math.min(1, (ts - start) / duration);
-          var e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-          var v = parsed.value * e;
-          el.textContent = parsed.prefix + (parsed.decimals ? v.toFixed(parsed.decimals) : Math.round(v)) + parsed.suffix;
-          if (t < 1) requestAnimationFrame(step);
-          else el.textContent = orig;
-        }
-        requestAnimationFrame(step);
-      }
-      var seen = new WeakSet();
-      var statIo = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !seen.has(entry.target)) {
-            seen.add(entry.target);
-            animate(entry.target);
+      var section = document.querySelector('.numbers');
+      if (!section) return;
+      var items = Array.prototype.slice.call(section.querySelectorAll('.num'));
+      if (!items.length) return;
+
+      var desktop = window.matchMedia('(min-width: 1025px)');
+      var motionOK = !reduce;
+      var ticking = false;
+      var active = false;
+
+      function update() {
+        ticking = false;
+        if (!active) return;
+        var rect = section.getBoundingClientRect();
+        var vh = window.innerHeight;
+        var total = section.offsetHeight - vh;
+        if (total <= 0) return;
+        var scrolled = Math.max(0, Math.min(total, -rect.top));
+        var progress = scrolled / total;
+        var N = items.length;
+
+        for (var i = 0; i < N; i++) {
+          var center = (i + 0.5) / N;
+          var half = 0.5 / N;
+          var d = (progress - center) / half; // -1 at segment start, 0 center, +1 end
+          var scale, opacity;
+          if (d < -1.3 || d > 1.3) {
+            scale = d < 0 ? 0.45 : 1.7;
+            opacity = 0;
+          } else {
+            scale = 1 + d * 0.55;
+            var ad = Math.abs(d);
+            var t = ad < 0.55 ? 1 : Math.max(0, 1 - (ad - 0.55) / 0.75);
+            opacity = t * t * (3 - 2 * t);
           }
-        });
-      }, { threshold: 0.4 });
-      nums.forEach(function (n) { statIo.observe(n); });
+          items[i].style.setProperty('--scale', scale.toFixed(3));
+          items[i].style.setProperty('--opacity', opacity.toFixed(3));
+        }
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      }
+
+      function apply() {
+        var shouldRun = desktop.matches && motionOK;
+        if (shouldRun === active) { if (active) update(); return; }
+        active = shouldRun;
+        if (active) {
+          window.addEventListener('scroll', onScroll, { passive: true });
+          window.addEventListener('resize', onScroll, { passive: true });
+          update();
+        } else {
+          window.removeEventListener('scroll', onScroll);
+          window.removeEventListener('resize', onScroll);
+          items.forEach(function (el) {
+            el.style.removeProperty('--scale');
+            el.style.removeProperty('--opacity');
+          });
+        }
+      }
+
+      apply();
+      if (desktop.addEventListener) desktop.addEventListener('change', apply);
+      else desktop.addListener(apply);
     })();
 
   })();
