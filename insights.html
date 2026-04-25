@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Insights &middot; inGeniti</title>
+<meta name="description" content="Conversations and commentary from the inGeniti team on the future of grid orchestration, AI, and energy." />
+<meta name="theme-color" content="#FAFAF7" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://i.ytimg.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #FAFAF7;
+    --surface: #FFFFFF;
+    --hairline: rgba(0, 0, 0, 0.08);
+    --hairline-2: rgba(0, 0, 0, 0.14);
+    --ink: #0A0A0B;
+    --ink-2: #52525B;
+    --ink-3: #A1A1AA;
+    --accent: #DC1F26;
+    --blue: #3B6AE8;
+
+    --display: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    --container: 1280px;
+    --gutter: 32px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  body { overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 88px;
+    background: rgba(59, 106, 232, 0.70);
+    backdrop-filter: saturate(140%) blur(4px);
+    -webkit-backdrop-filter: saturate(140%) blur(4px);
+    z-index: 40;
+    border-bottom: 1px solid transparent;
+    transition: border-color 160ms ease;
+  }
+  .nav.scrolled { border-bottom-color: rgba(0, 0, 0, 0.15); }
+  .nav-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+  }
+  .brand img {
+    height: 72px;
+    width: auto;
+    display: block;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .nav-links a {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.005em;
+    color: rgba(255, 255, 255, 0.86);
+    position: relative;
+    padding: 9px 16px;
+    border-radius: 999px;
+    transition: color 200ms ease, background 240ms cubic-bezier(.2,.7,.2,1);
+  }
+  .nav-links a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 220ms ease, transform 240ms cubic-bezier(.2,.7,.2,1);
+    z-index: -1;
+  }
+  .nav-links a:hover { color: #ffffff; }
+  .nav-links a:hover::before { opacity: 1; transform: scale(1); }
+  .nav-cta {
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.005em;
+    color: #ffffff;
+    background: var(--ink);
+    padding: 11px 22px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, gap 220ms ease, background 220ms ease;
+  }
+  .nav-cta--back::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='12' x2='5' y2='12'/><polyline points='12 19 5 12 12 5'/></svg>");
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1);
+  }
+  .nav-cta:hover {
+    background: #000000;
+    transform: translateY(-1px);
+    gap: 12px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28), 0 0 0 4px rgba(255, 255, 255, 0.16);
+  }
+  .nav-cta--back:hover::before { transform: translateX(-2px); }
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    width: 36px; height: 36px;
+    align-items: center; justify-content: center;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  @media (max-width: 1024px) {
+    .nav { height: 64px; }
+    .brand img { height: 44px; }
+    .nav-cta { padding: 9px 16px; font-size: 13px; }
+  }
+
+  /* HEADER */
+  .page-head {
+    padding: calc(88px + 56px) 0 48px;
+    position: relative;
+  }
+  .page-head::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 1px;
+    background: var(--hairline);
+  }
+  .eyebrow {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+  h1.page-title {
+    font-family: var(--display);
+    font-size: clamp(44px, 6vw, 72px);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+    margin: 0 0 20px;
+    max-width: 18ch;
+  }
+  .page-title .serif-em {
+    font-family: var(--display);
+    font-style: normal;
+    font-weight: 500;
+    color: var(--blue);
+    letter-spacing: -0.02em;
+  }
+  .page-lead {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 56ch;
+  }
+
+  /* VIDEOS */
+  .videos {
+    padding: 24px 0 96px;
+  }
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 56px 40px;
+  }
+  .video-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .video-thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 280ms cubic-bezier(.2,.7,.2,1), box-shadow 280ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .video-thumb:hover {
+    transform: scale(1.02);
+  }
+  .video-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 600ms cubic-bezier(.2,.7,.2,1), filter 280ms ease;
+  }
+  .video-thumb:hover img {
+    transform: scale(1.03);
+    filter: brightness(0.92);
+  }
+  .video-thumb iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 76px;
+    height: 76px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.96);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1), background 220ms ease;
+  }
+  .video-thumb:hover .play-btn {
+    transform: translate(-50%, -50%) scale(1.06);
+    background: #fff;
+  }
+  .play-btn svg {
+    width: 26px;
+    height: 26px;
+    margin-left: 3px;
+    color: var(--ink);
+  }
+  .duration-pill {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.78);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .video-meta {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .video-meta-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--ink-3);
+  }
+  .video-title {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin: 12px 0 12px;
+    color: var(--ink);
+  }
+  .video-desc {
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0 0 18px;
+  }
+  .video-watch {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--blue);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border-bottom: 1px solid rgba(59, 106, 232, 0.3);
+    padding-bottom: 2px;
+    align-self: flex-start;
+    transition: gap 200ms ease, border-color 200ms ease;
+  }
+  .video-watch:hover {
+    gap: 12px;
+    border-bottom-color: var(--blue);
+  }
+  .video-watch svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  @media (max-width: 900px) {
+    .video-grid { grid-template-columns: 1fr; gap: 48px; }
+    .page-head { padding: 56px 0 40px; }
+    .videos { padding: 16px 0 64px; }
+    .video-title { font-size: 22px; }
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 32px 0 20px;
+    border-top: 1px solid var(--hairline);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+    gap: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .footer-brand { display: inline-block; margin-bottom: 20px; }
+  .footer-brand img { height: 56px; width: auto; display: block; mix-blend-mode: multiply; }
+  .footer-tag {
+    max-width: 36ch;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+  .footer-social { display: flex; gap: 10px; align-items: center; }
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    transition: transform 160ms ease, opacity 160ms ease;
+  }
+  .social-link:hover { opacity: 0.88; transform: translateY(-1px); }
+  .social-link--linkedin { background: #0A66C2; color: #fff; }
+  .app-badges { display: flex; flex-direction: column; gap: 14px; }
+  .app-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: #000;
+    border: 1px solid #000;
+    border-radius: 10px;
+    color: #fff;
+    transition: transform 160ms ease, opacity 160ms ease;
+  }
+  .app-badge:hover { opacity: 0.88; transform: translateY(-1px); }
+  .app-badge-icon { flex-shrink: 0; }
+  .app-badge-text { display: flex; flex-direction: column; gap: 2px; line-height: 1.25; font-family: var(--sans); }
+  .app-badge-small {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.85);
+    text-transform: uppercase;
+  }
+  .app-badge-big { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: #fff; }
+  .footer-col h4 {
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .footer-col ul { display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0; margin: 0; }
+  .footer-col a { font-size: 14px; color: var(--ink-2); transition: color 160ms ease; }
+  .footer-col a:hover { color: var(--ink); }
+  .footer-col li.plain { font-size: 14px; color: var(--ink-2); }
+  .footer-bottom {
+    padding-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+  }
+  @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="brand" href="index.html" aria-label="inGeniti home">
+      <img src="logo-banner.png" alt="inGeniti" onerror="this.onerror=null;this.src='logo-wordmark-light.png';" />
+    </a>
+    <a class="nav-cta nav-cta--back" href="index.html">Back to home</a>
+  </div>
+</nav>
+
+<header class="page-head">
+  <div class="container">
+    <span class="eyebrow">Insights</span>
+    <h1 class="page-title">Conversations <span class="serif-em">on the future of energy.</span></h1>
+  </div>
+</header>
+
+<main class="videos">
+  <div class="container">
+    <div class="video-grid">
+
+      <article class="video-card">
+        <div class="video-thumb" data-yt-id="bNtJR5f6M_A" role="button" tabindex="0" aria-label="Play: Digital Round Table">
+          <img src="https://i.ytimg.com/vi/bNtJR5f6M_A/maxresdefault.jpg" alt="Digital Round Table thumbnail" loading="lazy" />
+          <button class="play-btn" type="button" aria-label="Play video">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M7 4.5v15a1 1 0 001.5.87l13-7.5a1 1 0 000-1.74l-13-7.5A1 1 0 007 4.5z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="video-meta">
+          <span>Roundtable</span>
+          <span class="video-meta-dot"></span>
+          <span>Feb 12, 2025</span>
+        </div>
+        <h2 class="video-title">Digital Round Table on Next-Generation Technology Solutions</h2>
+        <p class="video-desc">
+          Bhartendu Sinha, Founder of inGeniti, joins Andres Carvallo, Llewellyn King, and John Sibley Butler to discuss the inGeniti Moonshot: a globally deployable platform of optimization solutions targeting the open challenges in electricity and water.
+        </p>
+        <a class="video-watch" href="https://www.youtube.com/watch?v=bNtJR5f6M_A" target="_blank" rel="noopener">
+          Watch on YouTube
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </article>
+
+      <article class="video-card">
+        <div class="video-thumb" data-yt-id="I_B0vn3nLf8" role="button" tabindex="0" aria-label="Play: CEO Wisdom Podcast">
+          <img src="https://i.ytimg.com/vi/I_B0vn3nLf8/maxresdefault.jpg" alt="CEO Wisdom Podcast thumbnail" loading="lazy" />
+          <button class="play-btn" type="button" aria-label="Play video">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M7 4.5v15a1 1 0 001.5.87l13-7.5a1 1 0 000-1.74l-13-7.5A1 1 0 007 4.5z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="video-meta">
+          <span>Podcast</span>
+          <span class="video-meta-dot"></span>
+          <span>Apr 7, 2025</span>
+        </div>
+        <h2 class="video-title">Where AI and Energy Intertwine</h2>
+        <p class="video-desc">
+          Bhartendu Sinha sits down with Charles Cormier, CEO of PodPire and host of the CEO Wisdom Podcast, for a free-flowing conversation on the role inGeniti&rsquo;s platform will play in the coming evolution of smart energy and water grids.
+        </p>
+        <a class="video-watch" href="https://www.youtube.com/watch?v=I_B0vn3nLf8" target="_blank" rel="noopener">
+          Watch on YouTube
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="logo-wordmark.png" alt="inGeniti" />
+        </div>
+        <p class="footer-tag">Unified energy orchestration. Monitor, control, and optimize any electrical device, anywhere.</p>
+        <div class="footer-social">
+          <a class="social-link social-link--linkedin" href="https://www.linkedin.com/company/ingeniti/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="media.html">Press</a></li>
+          <li><a href="insights.html">Insights</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Office</h4>
+        <ul>
+          <li class="plain">101 Montgomery St, Suite 900</li>
+          <li class="plain">San Francisco, CA 94104, USA</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get the app</h4>
+        <div class="app-badges">
+          <a class="app-badge" href="#" aria-label="Download on the App Store">
+            <svg class="app-badge-icon" width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <path d="M17.05 12.04c-.03-3.18 2.6-4.7 2.72-4.78-1.48-2.17-3.79-2.46-4.61-2.5-1.96-.2-3.83 1.15-4.83 1.15-1 0-2.54-1.13-4.18-1.1-2.15.03-4.13 1.25-5.24 3.17-2.24 3.88-.57 9.62 1.6 12.77 1.06 1.54 2.32 3.27 3.97 3.21 1.6-.07 2.2-1.04 4.13-1.04 1.93 0 2.47 1.04 4.16 1 1.72-.03 2.81-1.57 3.86-3.12 1.22-1.79 1.72-3.52 1.74-3.61-.04-.02-3.34-1.28-3.37-5.07zM14.4 3.94c.88-1.07 1.48-2.55 1.32-4.04-1.27.05-2.83.85-3.74 1.91-.81.94-1.53 2.45-1.34 3.91 1.42.11 2.87-.72 3.76-1.78z"/>
+            </svg>
+            <span class="app-badge-text">
+              <span class="app-badge-small">Download on the</span>
+              <span class="app-badge-big">App Store</span>
+            </span>
+          </a>
+          <a class="app-badge" href="#" aria-label="Get it on Google Play">
+            <svg class="app-badge-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <linearGradient id="gp-blue-ins" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#00C3FF"/>
+                  <stop offset="100%" stop-color="#1A73E8"/>
+                </linearGradient>
+              </defs>
+              <path d="M3.6 1.8 L13.8 12 L3.6 22.2 Z" fill="url(#gp-blue-ins)"/>
+              <path d="M3.6 1.8 L17 8.8 L13.8 12 Z" fill="#EA4335"/>
+              <path d="M3.6 22.2 L13.8 12 L17 15.2 Z" fill="#34A853"/>
+              <path d="M17 8.8 L20.5 10.5 Q21.5 12 20.5 13.5 L17 15.2 L13.8 12 Z" fill="#FBBC04"/>
+            </svg>
+            <span class="app-badge-text">
+              <span class="app-badge-small">Get it on</span>
+              <span class="app-badge-big">Google Play</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 inGeniti, Inc.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var nav = document.getElementById('nav');
+    var onScroll = function () {
+      if (window.scrollY > 8) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    function loadVideo(thumb) {
+      var id = thumb.getAttribute('data-yt-id');
+      if (!id) return;
+      var iframe = document.createElement('iframe');
+      iframe.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0');
+      iframe.setAttribute('title', 'YouTube video player');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', '');
+      thumb.innerHTML = '';
+      thumb.appendChild(iframe);
+      thumb.style.cursor = 'default';
+    }
+
+    document.querySelectorAll('.video-thumb[data-yt-id]').forEach(function (thumb) {
+      thumb.addEventListener('click', function () { loadVideo(thumb); });
+      thumb.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          loadVideo(thumb);
+        }
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
