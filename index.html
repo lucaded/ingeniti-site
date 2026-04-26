@@ -672,16 +672,224 @@
   @media (max-width: 1023px) {
     .optima-viz-wrap { max-width: 420px; margin: 24px auto 0; }
   }
-  .optima-viz {
-    display: block;
+  .optima-card {
+    position: relative;
     width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 80px rgba(0, 219, 255, 0.10));
+    border-radius: 24px;
+    padding: 36px 36px 28px;
+    background:
+      radial-gradient(circle at 18% 0%, rgba(0, 219, 255, 0.16), transparent 55%),
+      radial-gradient(circle at 100% 100%, rgba(110, 163, 255, 0.10), transparent 55%),
+      linear-gradient(180deg, #11192E 0%, #060A18 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+      0 30px 80px -20px rgba(0, 0, 0, 0.7),
+      0 0 70px rgba(0, 219, 255, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    isolation: isolate;
+    font-family: var(--sans);
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .optima-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 16%; right: 16%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 219, 255, 0.55), transparent);
+  }
+  .optima-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(circle at 50% 60%, transparent 35%, black 90%);
+    -webkit-mask-image: radial-gradient(circle at 50% 60%, transparent 35%, black 90%);
+  }
+  .optima-card > * { position: relative; z-index: 1; }
+
+  .optima-card-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+  .optima-brand-mark {
+    font-family: var(--display);
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    line-height: 1;
+    color: #FFFFFF;
+    filter: drop-shadow(0 0 24px rgba(0, 219, 255, 0.28));
+  }
+  .optima-brand-rule {
+    width: 64px; height: 2px;
+    margin-top: 10px;
+    background: linear-gradient(90deg, #00DBFF, rgba(0, 219, 255, 0));
+    border-radius: 1px;
+  }
+  .optima-brand-tag {
+    margin-top: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.50);
+  }
+  .optima-live {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(46, 230, 164, 0.30);
+    background: rgba(46, 230, 164, 0.06);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: #2EE6A4;
+  }
+  .optima-live::before {
+    content: "";
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #2EE6A4;
+    box-shadow: 0 0 8px rgba(46, 230, 164, 0.7);
+    animation: optimaPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes optimaPulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.4; }
+  }
+
+  .optima-modes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 28px 0 26px;
+  }
+  .optima-mode {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    height: 46px;
+    border-radius: 23px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 320ms ease, border-color 320ms ease, background 320ms ease, box-shadow 320ms ease;
+    animation: optimaModeCycle 6s ease-in-out infinite;
+  }
+  .optima-mode-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.30);
+    transition: background 320ms ease, box-shadow 320ms ease;
+  }
+  .optima-mode--monitor  { animation-delay: 0s;  }
+  .optima-mode--control  { animation-delay: -4s; }
+  .optima-mode--optimize { animation-delay: -2s; }
+  @keyframes optimaModeCycle {
+    0%, 28%   {
+      color: #FFFFFF;
+      border-color: rgba(0, 219, 255, 0.55);
+      background: rgba(0, 219, 255, 0.08);
+      box-shadow: 0 0 28px rgba(0, 219, 255, 0.20), inset 0 0 12px rgba(0, 219, 255, 0.08);
+    }
+    36%, 100% {
+      color: rgba(255, 255, 255, 0.55);
+      border-color: rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.02);
+      box-shadow: none;
+    }
+  }
+  @keyframes optimaModeDotCycle {
+    0%, 28%   { background: #00DBFF; box-shadow: 0 0 10px rgba(0, 219, 255, 0.85); }
+    36%, 100% { background: rgba(255, 255, 255, 0.30); box-shadow: none; }
+  }
+  .optima-mode .optima-mode-dot {
+    animation: optimaModeDotCycle 6s ease-in-out infinite;
+    animation-delay: inherit;
+  }
+  .optima-mode--monitor  .optima-mode-dot { animation-delay: 0s;  }
+  .optima-mode--control  .optima-mode-dot { animation-delay: -4s; }
+  .optima-mode--optimize .optima-mode-dot { animation-delay: -2s; }
+
+  .optima-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    padding: 22px 4px 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .optima-spec-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.30em;
+    text-transform: uppercase;
+    color: rgba(0, 219, 255, 0.78);
+    margin-bottom: 14px;
+  }
+  .optima-spec-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .optima-spec-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.2;
+  }
+  .optima-spec-list li::before {
+    content: "";
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(0, 219, 255, 0.85);
+    box-shadow: 0 0 6px rgba(0, 219, 255, 0.55);
+    flex-shrink: 0;
+  }
+  .optima-spec-meta {
+    margin-top: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.5;
+  }
+
+  .optima-card-foot {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+  .optima-cred {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(0, 219, 255, 0.85);
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 219, 255, 0.22);
+    background: rgba(0, 219, 255, 0.04);
+  }
+
+  @media (max-width: 540px) {
+    .optima-card { padding: 26px 22px 22px; }
+    .optima-grid { grid-template-columns: 1fr; gap: 20px; }
+    .optima-brand-mark { font-size: 24px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .optima-viz animate,
-    .optima-viz animateMotion { animation: none; }
+    .optima-mode, .optima-mode .optima-mode-dot, .optima-live::before { animation: none; }
   }
   .hero-visual {
     position: relative;
@@ -2601,142 +2809,59 @@
         </p>
       </div>
       <div class="optima-viz-wrap" data-reveal>
-        <svg class="optima-viz" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
-          <defs>
-            <linearGradient id="ovFrameBg" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#0E1426"/>
-              <stop offset="100%" stop-color="#070B19"/>
-            </linearGradient>
-            <linearGradient id="ovDivider" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="rgba(255, 255, 255, 0)"/>
-              <stop offset="50%"  stop-color="rgba(255, 255, 255, 0.14)"/>
-              <stop offset="100%" stop-color="rgba(255, 255, 255, 0)"/>
-            </linearGradient>
-          </defs>
+        <div class="optima-card">
+          <div class="optima-card-head">
+            <div>
+              <div class="optima-brand-mark">OPTIMA</div>
+              <div class="optima-brand-rule"></div>
+              <div class="optima-brand-tag">Unified Energy Optimization</div>
+            </div>
+          </div>
 
-          <rect x="18" y="18" width="564" height="564" rx="14"
-                fill="url(#ovFrameBg)"
-                stroke="rgba(0, 219, 255, 0.22)" stroke-width="1"/>
+          <div class="optima-modes" aria-hidden="true">
+            <div class="optima-mode optima-mode--monitor">
+              <span class="optima-mode-dot"></span>
+              <span>Monitor</span>
+            </div>
+            <div class="optima-mode optima-mode--control">
+              <span class="optima-mode-dot"></span>
+              <span>Control</span>
+            </div>
+            <div class="optima-mode optima-mode--optimize">
+              <span class="optima-mode-dot"></span>
+              <span>Optimize</span>
+            </div>
+          </div>
 
-          <text x="40" y="50" font-family="Inter, sans-serif" font-size="14" font-weight="600"
-                letter-spacing="0.32em" fill="rgba(255, 255, 255, 0.94)">OPTIMA</text>
-          <line x1="40" y1="60" x2="92" y2="60" stroke="#00DBFF" stroke-width="1.4"/>
-          <text x="40" y="78" font-family="Inter, sans-serif" font-size="10" font-weight="500"
-                letter-spacing="0.20em" fill="rgba(255, 255, 255, 0.45)">UNIFIED ENERGY OPTIMIZATION</text>
+          <div class="optima-grid">
+            <div>
+              <div class="optima-spec-label">Any Device</div>
+              <ul class="optima-spec-list">
+                <li>Solar &amp; Storage</li>
+                <li>Sites &amp; Circuits</li>
+                <li>EV Chargers</li>
+                <li>HVAC Systems</li>
+                <li>Industrial Assets</li>
+              </ul>
+              <div class="optima-spec-meta">1/2/3 Phase &middot; 110/240/480V</div>
+            </div>
+            <div>
+              <div class="optima-spec-label">Anywhere</div>
+              <ul class="optima-spec-list">
+                <li>Long range WiFi-6</li>
+                <li>Global cellular</li>
+                <li>Without network</li>
+              </ul>
+              <div class="optima-spec-meta">Open standards &middot; SaaS or grid edge</div>
+            </div>
+          </div>
 
-          <line x1="40" y1="100" x2="560" y2="100" stroke="url(#ovDivider)" stroke-width="1"/>
-
-          <text x="40" y="126" font-family="Inter, sans-serif" font-size="9" font-weight="600"
-                letter-spacing="0.26em" fill="rgba(255, 255, 255, 0.42)">ANY DEVICE</text>
-
-          <g font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="rgba(255, 255, 255, 0.92)">
-            <g transform="translate(40, 156)">
-              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
-              <text x="14" y="4.5">Solar &amp; Storage</text>
-            </g>
-            <g transform="translate(40, 184)">
-              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
-              <text x="14" y="4.5">Sites &amp; Circuits</text>
-            </g>
-            <g transform="translate(40, 212)">
-              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
-              <text x="14" y="4.5">EV Chargers</text>
-            </g>
-            <g transform="translate(40, 240)">
-              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
-              <text x="14" y="4.5">HVAC Systems</text>
-            </g>
-            <g transform="translate(40, 268)">
-              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
-              <text x="14" y="4.5">Industrial Assets</text>
-            </g>
-          </g>
-
-          <text x="40" y="306" font-family="Inter, sans-serif" font-size="10" font-weight="500"
-                letter-spacing="0.18em" fill="rgba(255, 255, 255, 0.48)">1/2/3 PHASE   ·   110/240/480V   ·   MID TO HIGH POWER</text>
-
-          <line x1="40" y1="332" x2="560" y2="332" stroke="url(#ovDivider)" stroke-width="1"/>
-
-          <text x="40" y="358" font-family="Inter, sans-serif" font-size="9" font-weight="600"
-                letter-spacing="0.26em" fill="rgba(255, 255, 255, 0.42)">ANYWHERE</text>
-          <text x="40" y="394" font-family="Inter, sans-serif" font-size="14" font-weight="500"
-                fill="rgba(255, 255, 255, 0.92)">Long range WiFi-6   ·   Global cellular   ·   Without network</text>
-
-          <line x1="40" y1="430" x2="560" y2="430" stroke="url(#ovDivider)" stroke-width="1"/>
-
-          <g transform="translate(0, 460)">
-            <g>
-              <rect x="61" y="0" width="155" height="34" rx="17" fill="rgba(255, 255, 255, 0.02)"
-                    stroke="rgba(255, 255, 255, 0.10)" stroke-width="1">
-                <animate attributeName="stroke" dur="6s" repeatCount="indefinite"
-                         values="rgba(0,219,255,0.55);rgba(0,219,255,0.55);rgba(255,255,255,0.10);rgba(255,255,255,0.10)"
-                         keyTimes="0;0.30;0.34;1"/>
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="rgba(0,219,255,0.08);rgba(0,219,255,0.08);rgba(255,255,255,0.02);rgba(255,255,255,0.02)"
-                         keyTimes="0;0.30;0.34;1"/>
-              </rect>
-              <circle cx="83" cy="17" r="3" fill="rgba(255, 255, 255, 0.30)">
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="#00DBFF;#00DBFF;rgba(255,255,255,0.30);rgba(255,255,255,0.30)"
-                         keyTimes="0;0.30;0.34;1"/>
-              </circle>
-              <text x="138" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="11"
-                    font-weight="600" letter-spacing="0.24em" fill="rgba(255, 255, 255, 0.55)">MONITOR
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="#00DBFF;#00DBFF;rgba(255,255,255,0.55);rgba(255,255,255,0.55)"
-                         keyTimes="0;0.30;0.34;1"/>
-              </text>
-            </g>
-            <g>
-              <rect x="225" y="0" width="155" height="34" rx="17" fill="rgba(255, 255, 255, 0.02)"
-                    stroke="rgba(255, 255, 255, 0.10)" stroke-width="1">
-                <animate attributeName="stroke" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.10);rgba(255,255,255,0.10);rgba(110,163,255,0.55);rgba(110,163,255,0.55);rgba(255,255,255,0.10);rgba(255,255,255,0.10)"
-                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.02);rgba(255,255,255,0.02);rgba(110,163,255,0.08);rgba(110,163,255,0.08);rgba(255,255,255,0.02);rgba(255,255,255,0.02)"
-                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
-              </rect>
-              <circle cx="247" cy="17" r="3" fill="rgba(255, 255, 255, 0.30)">
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.30);rgba(255,255,255,0.30);#6EA3FF;#6EA3FF;rgba(255,255,255,0.30);rgba(255,255,255,0.30)"
-                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
-              </circle>
-              <text x="302" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="11"
-                    font-weight="600" letter-spacing="0.24em" fill="rgba(255, 255, 255, 0.55)">CONTROL
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.55);rgba(255,255,255,0.55);#6EA3FF;#6EA3FF;rgba(255,255,255,0.55);rgba(255,255,255,0.55)"
-                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
-              </text>
-            </g>
-            <g>
-              <rect x="389" y="0" width="155" height="34" rx="17" fill="rgba(255, 255, 255, 0.02)"
-                    stroke="rgba(255, 255, 255, 0.10)" stroke-width="1">
-                <animate attributeName="stroke" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.10);rgba(255,255,255,0.10);rgba(255,255,255,0.55);rgba(255,255,255,0.55)"
-                         keyTimes="0;0.66;0.67;1"/>
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.02);rgba(255,255,255,0.02);rgba(255,255,255,0.08);rgba(255,255,255,0.08)"
-                         keyTimes="0;0.66;0.67;1"/>
-              </rect>
-              <circle cx="411" cy="17" r="3" fill="rgba(255, 255, 255, 0.30)">
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.30);rgba(255,255,255,0.30);#FFFFFF;#FFFFFF"
-                         keyTimes="0;0.66;0.67;1"/>
-              </circle>
-              <text x="466" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="11"
-                    font-weight="600" letter-spacing="0.24em" fill="rgba(255, 255, 255, 0.55)">OPTIMIZE
-                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
-                         values="rgba(255,255,255,0.55);rgba(255,255,255,0.55);#FFFFFF;#FFFFFF"
-                         keyTimes="0;0.66;0.67;1"/>
-              </text>
-            </g>
-          </g>
-
-          <line x1="40" y1="520" x2="560" y2="520" stroke="url(#ovDivider)" stroke-width="1"/>
-          <text x="300" y="552" text-anchor="middle" font-family="Inter, sans-serif" font-size="10"
-                font-weight="600" letter-spacing="0.26em" fill="rgba(0, 219, 255, 0.78)">EPRI TOP 25   ·   NREL GRANT   ·   PATENT PENDING</text>
-        </svg>
+          <div class="optima-card-foot">
+            <span class="optima-cred">EPRI Top 25</span>
+            <span class="optima-cred">NREL Grant</span>
+            <span class="optima-cred">Patent Pending</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -3559,7 +3684,7 @@
       <span class="eyebrow">Contact</span>
     </div>
     <h2 class="final-head" data-reveal>
-      Let&rsquo;s rebuild the grid, <span class="serif-em">one device at a time.</span>
+      One platform. Every device. <span class="serif-em">Anywhere.</span>
     </h2>
     <p class="body-prose" data-reveal style="margin-top:-24px; margin-bottom:32px; max-width:62ch;">
       Whether you&rsquo;re running a pilot, evaluating platforms, or partnering on deployment, our team will respond within 48 hours.
