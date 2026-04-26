@@ -658,6 +658,31 @@
     gap: 56px;
     align-items: center;
   }
+  @media (min-width: 1024px) {
+    .hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 80px; }
+  }
+
+  /* OPTIMA HERO VIZ */
+  .optima-viz-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    margin-left: auto;
+  }
+  @media (max-width: 1023px) {
+    .optima-viz-wrap { max-width: 420px; margin: 24px auto 0; }
+  }
+  .optima-viz {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 80px rgba(0, 219, 255, 0.10));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .optima-viz animate,
+    .optima-viz animateMotion { animation: none; }
+  }
   .hero-visual {
     position: relative;
     max-width: 720px;
@@ -2169,13 +2194,29 @@
     color: var(--ink-3);
     background: var(--surface);
   }
+  .person--upcoming { opacity: 0.72; }
+  .person--upcoming .person-sq {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    aspect-ratio: auto;
+    height: 96px;
+  }
+  .person--upcoming .person-name {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
   .person-sq.upcoming {
     font-family: var(--sans);
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--ink-3);
-    background: var(--surface);
+    background: transparent;
     text-align: center;
     padding: 0 16px;
   }
@@ -2558,6 +2599,144 @@
         <p class="hero-sub" data-reveal>
           OPTIMA turns ten billion distributed devices into a coordinated grid resource.<br />Cuts utility program capex by 80% and puts control back in customers&rsquo; hands.
         </p>
+      </div>
+      <div class="optima-viz-wrap" data-reveal>
+        <svg class="optima-viz" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="ovFrameBg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#0E1426"/>
+              <stop offset="100%" stop-color="#070B19"/>
+            </linearGradient>
+            <linearGradient id="ovDivider" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="rgba(255, 255, 255, 0)"/>
+              <stop offset="50%"  stop-color="rgba(255, 255, 255, 0.14)"/>
+              <stop offset="100%" stop-color="rgba(255, 255, 255, 0)"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="18" y="18" width="564" height="564" rx="14"
+                fill="url(#ovFrameBg)"
+                stroke="rgba(0, 219, 255, 0.22)" stroke-width="1"/>
+
+          <text x="40" y="50" font-family="Inter, sans-serif" font-size="14" font-weight="600"
+                letter-spacing="0.32em" fill="rgba(255, 255, 255, 0.94)">OPTIMA</text>
+          <line x1="40" y1="60" x2="92" y2="60" stroke="#00DBFF" stroke-width="1.4"/>
+          <text x="40" y="78" font-family="Inter, sans-serif" font-size="10" font-weight="500"
+                letter-spacing="0.20em" fill="rgba(255, 255, 255, 0.45)">UNIFIED ENERGY OPTIMIZATION</text>
+
+          <line x1="40" y1="100" x2="560" y2="100" stroke="url(#ovDivider)" stroke-width="1"/>
+
+          <text x="40" y="126" font-family="Inter, sans-serif" font-size="9" font-weight="600"
+                letter-spacing="0.26em" fill="rgba(255, 255, 255, 0.42)">ANY DEVICE</text>
+
+          <g font-family="Inter, sans-serif" font-size="14" font-weight="500" fill="rgba(255, 255, 255, 0.92)">
+            <g transform="translate(40, 156)">
+              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
+              <text x="14" y="4.5">Solar &amp; Storage</text>
+            </g>
+            <g transform="translate(40, 184)">
+              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
+              <text x="14" y="4.5">Sites &amp; Circuits</text>
+            </g>
+            <g transform="translate(40, 212)">
+              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
+              <text x="14" y="4.5">EV Chargers</text>
+            </g>
+            <g transform="translate(40, 240)">
+              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
+              <text x="14" y="4.5">HVAC Systems</text>
+            </g>
+            <g transform="translate(40, 268)">
+              <rect x="0" y="-3.5" width="3" height="7" fill="#00DBFF"/>
+              <text x="14" y="4.5">Industrial Assets</text>
+            </g>
+          </g>
+
+          <text x="40" y="306" font-family="Inter, sans-serif" font-size="10" font-weight="500"
+                letter-spacing="0.18em" fill="rgba(255, 255, 255, 0.48)">1/2/3 PHASE   ·   110/240/480V   ·   MID TO HIGH POWER</text>
+
+          <line x1="40" y1="332" x2="560" y2="332" stroke="url(#ovDivider)" stroke-width="1"/>
+
+          <text x="40" y="358" font-family="Inter, sans-serif" font-size="9" font-weight="600"
+                letter-spacing="0.26em" fill="rgba(255, 255, 255, 0.42)">ANYWHERE</text>
+          <text x="40" y="394" font-family="Inter, sans-serif" font-size="14" font-weight="500"
+                fill="rgba(255, 255, 255, 0.92)">Long range WiFi-6   ·   Global cellular   ·   Without network</text>
+
+          <line x1="40" y1="430" x2="560" y2="430" stroke="url(#ovDivider)" stroke-width="1"/>
+
+          <g transform="translate(0, 460)">
+            <g>
+              <rect x="61" y="0" width="155" height="34" rx="17" fill="rgba(255, 255, 255, 0.02)"
+                    stroke="rgba(255, 255, 255, 0.10)" stroke-width="1">
+                <animate attributeName="stroke" dur="6s" repeatCount="indefinite"
+                         values="rgba(0,219,255,0.55);rgba(0,219,255,0.55);rgba(255,255,255,0.10);rgba(255,255,255,0.10)"
+                         keyTimes="0;0.30;0.34;1"/>
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="rgba(0,219,255,0.08);rgba(0,219,255,0.08);rgba(255,255,255,0.02);rgba(255,255,255,0.02)"
+                         keyTimes="0;0.30;0.34;1"/>
+              </rect>
+              <circle cx="83" cy="17" r="3" fill="rgba(255, 255, 255, 0.30)">
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="#00DBFF;#00DBFF;rgba(255,255,255,0.30);rgba(255,255,255,0.30)"
+                         keyTimes="0;0.30;0.34;1"/>
+              </circle>
+              <text x="138" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="11"
+                    font-weight="600" letter-spacing="0.24em" fill="rgba(255, 255, 255, 0.55)">MONITOR
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="#00DBFF;#00DBFF;rgba(255,255,255,0.55);rgba(255,255,255,0.55)"
+                         keyTimes="0;0.30;0.34;1"/>
+              </text>
+            </g>
+            <g>
+              <rect x="225" y="0" width="155" height="34" rx="17" fill="rgba(255, 255, 255, 0.02)"
+                    stroke="rgba(255, 255, 255, 0.10)" stroke-width="1">
+                <animate attributeName="stroke" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.10);rgba(255,255,255,0.10);rgba(110,163,255,0.55);rgba(110,163,255,0.55);rgba(255,255,255,0.10);rgba(255,255,255,0.10)"
+                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.02);rgba(255,255,255,0.02);rgba(110,163,255,0.08);rgba(110,163,255,0.08);rgba(255,255,255,0.02);rgba(255,255,255,0.02)"
+                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
+              </rect>
+              <circle cx="247" cy="17" r="3" fill="rgba(255, 255, 255, 0.30)">
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.30);rgba(255,255,255,0.30);#6EA3FF;#6EA3FF;rgba(255,255,255,0.30);rgba(255,255,255,0.30)"
+                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
+              </circle>
+              <text x="302" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="11"
+                    font-weight="600" letter-spacing="0.24em" fill="rgba(255, 255, 255, 0.55)">CONTROL
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.55);rgba(255,255,255,0.55);#6EA3FF;#6EA3FF;rgba(255,255,255,0.55);rgba(255,255,255,0.55)"
+                         keyTimes="0;0.33;0.34;0.63;0.67;1"/>
+              </text>
+            </g>
+            <g>
+              <rect x="389" y="0" width="155" height="34" rx="17" fill="rgba(255, 255, 255, 0.02)"
+                    stroke="rgba(255, 255, 255, 0.10)" stroke-width="1">
+                <animate attributeName="stroke" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.10);rgba(255,255,255,0.10);rgba(255,255,255,0.55);rgba(255,255,255,0.55)"
+                         keyTimes="0;0.66;0.67;1"/>
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.02);rgba(255,255,255,0.02);rgba(255,255,255,0.08);rgba(255,255,255,0.08)"
+                         keyTimes="0;0.66;0.67;1"/>
+              </rect>
+              <circle cx="411" cy="17" r="3" fill="rgba(255, 255, 255, 0.30)">
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.30);rgba(255,255,255,0.30);#FFFFFF;#FFFFFF"
+                         keyTimes="0;0.66;0.67;1"/>
+              </circle>
+              <text x="466" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-size="11"
+                    font-weight="600" letter-spacing="0.24em" fill="rgba(255, 255, 255, 0.55)">OPTIMIZE
+                <animate attributeName="fill" dur="6s" repeatCount="indefinite"
+                         values="rgba(255,255,255,0.55);rgba(255,255,255,0.55);#FFFFFF;#FFFFFF"
+                         keyTimes="0;0.66;0.67;1"/>
+              </text>
+            </g>
+          </g>
+
+          <line x1="40" y1="520" x2="560" y2="520" stroke="url(#ovDivider)" stroke-width="1"/>
+          <text x="300" y="552" text-anchor="middle" font-family="Inter, sans-serif" font-size="10"
+                font-weight="600" letter-spacing="0.26em" fill="rgba(0, 219, 255, 0.78)">EPRI TOP 25   ·   NREL GRANT   ·   PATENT PENDING</text>
+        </svg>
       </div>
     </div>
   </div>
@@ -3349,23 +3528,23 @@
         <div class="person-linkedin">LinkedIn &rarr;</div>
       </a>
 
-      <div class="person person--r3-1" data-reveal>
-        <div class="person-sq upcoming">Announcing soon&hellip;</div>
+      <div class="person person--upcoming person--r3-1" data-reveal>
+        <div class="person-sq upcoming">Announcing soon</div>
         <div class="person-name">Chief of Product &amp; Delivery</div>
       </div>
 
-      <div class="person person--r3-2" data-reveal>
-        <div class="person-sq upcoming">Announcing soon&hellip;</div>
+      <div class="person person--upcoming person--r3-2" data-reveal>
+        <div class="person-sq upcoming">Announcing soon</div>
         <div class="person-name">Chief of Software</div>
       </div>
 
-      <div class="person person--r3-3" data-reveal>
-        <div class="person-sq upcoming">Announcing soon&hellip;</div>
+      <div class="person person--upcoming person--r3-3" data-reveal>
+        <div class="person-sq upcoming">Announcing soon</div>
         <div class="person-name">Chief of Hardware</div>
       </div>
 
-      <div class="person person--r3-4" data-reveal>
-        <div class="person-sq upcoming">Announcing soon&hellip;</div>
+      <div class="person person--upcoming person--r3-4" data-reveal>
+        <div class="person-sq upcoming">Announcing soon</div>
         <div class="person-name">Chief of Technology &amp; Research</div>
       </div>
 
