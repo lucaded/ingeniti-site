@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Press &middot; inGeniti</title>
 <meta name="description" content="Press coverage of inGeniti and OPTIMA from CBS, KTLA, ABC, Renewable Energy World, EE Power, and more." />
-<meta name="theme-color" content="#FAFAF7" />
+<meta name="theme-color" content="#05080F" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,15 +14,16 @@
 
 <style>
   :root {
-    --bg: #FAFAF7;
-    --surface: #FFFFFF;
-    --hairline: rgba(0, 0, 0, 0.08);
-    --hairline-2: rgba(0, 0, 0, 0.14);
-    --ink: #0A0A0B;
-    --ink-2: #52525B;
-    --ink-3: #A1A1AA;
-    --accent: #DC1F26;
-    --blue: #3B6AE8;
+    --bg: #05080F;
+    --surface: #0E1426;
+    --hairline: rgba(255, 255, 255, 0.06);
+    --hairline-2: rgba(255, 255, 255, 0.16);
+    --ink: #F2F4F8;
+    --ink-2: #9AA3B8;
+    --ink-3: #5A6280;
+    --accent: #FF3B47;
+    --blue: #6EA3FF;
+    --cyan: #00DBFF;
 
     --display: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -60,14 +61,14 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     height: 88px;
-    background: rgba(59, 106, 232, 0.70);
-    backdrop-filter: saturate(140%) blur(4px);
-    -webkit-backdrop-filter: saturate(140%) blur(4px);
+    background: rgba(8, 14, 32, 0.72);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
     z-index: 40;
     border-bottom: 1px solid transparent;
     transition: border-color 160ms ease;
   }
-  .nav.scrolled { border-bottom-color: rgba(0, 0, 0, 0.15); }
+  .nav.scrolled { border-bottom-color: rgba(255, 255, 255, 0.08); }
   .nav-inner {
     max-width: var(--container);
     margin: 0 auto;
@@ -82,11 +83,78 @@
     display: inline-flex;
     align-items: center;
     height: 100%;
+    position: relative;
+  }
+  .brand::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 219, 255, 0.55), rgba(110, 163, 255, 0.25) 40%, transparent 72%);
+    filter: blur(18px);
+    z-index: -1;
+    pointer-events: none;
+    animation: brandAuraPulse 4.6s ease-in-out infinite;
   }
   .brand img {
     height: 72px;
     width: auto;
     display: block;
+    filter: drop-shadow(0 0 10px rgba(0, 219, 255, 0.55)) drop-shadow(0 0 22px rgba(110, 163, 255, 0.35));
+  }
+  .brand-orbit {
+    position: absolute;
+    top: 26%;
+    left: 47%;
+    width: 38%;
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+    z-index: 2;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 30deg,
+      rgba(0, 219, 255, 0.9) 110deg,
+      rgba(255, 255, 255, 1) 150deg,
+      rgba(0, 219, 255, 0.9) 190deg,
+      transparent 270deg,
+      transparent 360deg
+    );
+    -webkit-mask: radial-gradient(circle, transparent 47%, #000 48.8%, #000 50.6%, transparent 52.6%);
+            mask: radial-gradient(circle, transparent 47%, #000 48.8%, #000 50.6%, transparent 52.6%);
+    filter: drop-shadow(0 0 5px rgba(0, 219, 255, 0.9));
+    animation: planetOrbitSpin 7s linear infinite;
+  }
+  .brand-orbit--inner {
+    top: 31%;
+    left: 52%;
+    width: 28%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 80deg,
+      rgba(255, 255, 255, 0.95) 140deg,
+      rgba(0, 219, 255, 0.5) 180deg,
+      transparent 240deg,
+      transparent 360deg
+    );
+    -webkit-mask: radial-gradient(circle, transparent 47%, #000 48.5%, #000 50.2%, transparent 52.5%);
+            mask: radial-gradient(circle, transparent 47%, #000 48.5%, #000 50.2%, transparent 52.5%);
+    animation: planetOrbitSpin 5s linear infinite reverse;
+    opacity: 0.85;
+  }
+  @keyframes planetOrbitSpin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brand-orbit { animation: none; }
+  }
+  @keyframes brandAuraPulse {
+    0%, 100% { opacity: 0.7; transform: scale(0.96); }
+    50%      { opacity: 1;   transform: scale(1.08); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .brand::before { animation: none; }
   }
   .nav-links {
     display: flex;
@@ -125,7 +193,7 @@
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.005em;
-    color: #ffffff;
+    color: var(--bg);
     background: var(--ink);
     padding: 11px 22px;
     border: 1px solid var(--ink);
@@ -133,25 +201,30 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-    transition: transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, gap 220ms ease, background 220ms ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, gap 220ms ease, background 220ms ease, color 220ms ease, border-color 220ms ease;
   }
   .nav-cta--back::before {
     content: "";
     width: 14px;
     height: 14px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='12' x2='5' y2='12'/><polyline points='12 19 5 12 12 5'/></svg>");
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2305080F' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='12' x2='5' y2='12'/><polyline points='12 19 5 12 12 5'/></svg>");
     background-size: contain;
     background-repeat: no-repeat;
-    transition: transform 220ms cubic-bezier(.2,.7,.2,1);
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1), background-image 0ms;
   }
   .nav-cta:hover {
-    background: #000000;
+    background: var(--accent);
+    color: #ffffff;
+    border-color: var(--accent);
     transform: translateY(-1px);
     gap: 12px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28), 0 0 0 4px rgba(255, 255, 255, 0.16);
+    box-shadow: 0 8px 22px rgba(255, 59, 71, 0.35), 0 0 0 4px rgba(255, 59, 71, 0.18);
   }
-  .nav-cta--back:hover::before { transform: translateX(-2px); }
+  .nav-cta--back:hover::before {
+    transform: translateX(-2px);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'><line x1='19' y1='12' x2='5' y2='12'/><polyline points='12 19 5 12 12 5'/></svg>");
+  }
   .nav-toggle {
     display: none;
     background: transparent;
@@ -255,9 +328,9 @@
     background: linear-gradient(90deg, var(--accent), var(--blue));
   }
   .featured-card:hover {
-    border-color: var(--ink);
+    border-color: var(--hairline-2);
     transform: translateY(-3px);
-    box-shadow: 0 24px 48px -16px rgba(0,0,0,0.16);
+    box-shadow: 0 24px 48px -16px rgba(0,0,0,0.7), 0 0 0 1px rgba(110, 163, 255, 0.18);
   }
   @media (min-width: 900px) {
     .featured-card { grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: center; }
@@ -272,7 +345,7 @@
     align-items: center;
     gap: 8px;
     align-self: flex-start;
-    background: rgba(220, 31, 38, 0.08);
+    background: rgba(255, 59, 71, 0.12);
     color: var(--accent);
     font-family: var(--display);
     font-size: 11px;
@@ -286,12 +359,12 @@
     width: 6px; height: 6px;
     background: var(--accent);
     border-radius: 999px;
-    box-shadow: 0 0 0 4px rgba(220, 31, 38, 0.15);
+    box-shadow: 0 0 0 4px rgba(255, 59, 71, 0.18);
     animation: featuredPulse 2.4s ease-in-out infinite;
   }
   @keyframes featuredPulse {
-    0%, 100% { box-shadow: 0 0 0 4px rgba(220, 31, 38, 0.15); }
-    50%      { box-shadow: 0 0 0 7px rgba(220, 31, 38, 0.05); }
+    0%, 100% { box-shadow: 0 0 0 4px rgba(255, 59, 71, 0.18); }
+    50%      { box-shadow: 0 0 0 7px rgba(255, 59, 71, 0.06); }
   }
   .featured-pub {
     display: flex;
@@ -349,7 +422,7 @@
     font-size: 15px;
     font-weight: 600;
     letter-spacing: -0.005em;
-    border-bottom: 1px solid rgba(59, 106, 232, 0.3);
+    border-bottom: 1px solid rgba(110, 163, 255, 0.3);
     padding-bottom: 2px;
     align-self: flex-start;
     transition: gap 200ms ease, border-color 200ms ease;
@@ -396,8 +469,8 @@
   }
   .article-card:hover {
     transform: translateY(-3px);
-    border-color: var(--ink);
-    box-shadow: 0 16px 32px -12px rgba(0,0,0,0.14);
+    border-color: var(--hairline-2);
+    box-shadow: 0 16px 32px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(110, 163, 255, 0.16);
   }
   .article-card:hover::before { transform: scaleX(1); }
   .article-pub {
@@ -478,7 +551,7 @@
     border-bottom: 1px solid var(--hairline);
   }
   .footer-brand { display: inline-block; margin-bottom: 20px; }
-  .footer-brand img { height: 56px; width: auto; display: block; mix-blend-mode: multiply; }
+  .footer-brand img { height: 56px; width: auto; display: block; }
   .footer-tag {
     max-width: 36ch;
     color: var(--ink-2);
@@ -486,18 +559,25 @@
     line-height: 1.55;
     margin-bottom: 24px;
   }
-  .footer-social { display: flex; gap: 10px; align-items: center; }
+  .footer-social { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .footer-social-pitch { font-size: 13px; line-height: 1.45; color: var(--ink-2); max-width: 36ch; margin: 0; }
   .social-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    transition: transform 160ms ease, opacity 160ms ease;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    transition: transform 200ms ease, background 200ms ease, gap 200ms ease;
   }
-  .social-link:hover { opacity: 0.88; transform: translateY(-1px); }
-  .social-link--linkedin { background: #0A66C2; color: #fff; }
+  .social-link svg { flex-shrink: 0; }
+  .social-link-arrow { width: 12px; height: 12px; transition: transform 200ms ease; }
+  .social-link:hover { transform: translateY(-1px); gap: 14px; }
+  .social-link--linkedin { background: #0A66C2; color: #ffffff; }
+  .social-link--linkedin:hover { background: #0958A8; }
   .app-badges { display: flex; flex-direction: column; gap: 14px; }
   .app-badge {
     display: inline-flex;
@@ -559,8 +639,10 @@
 
 <nav class="nav" id="nav" aria-label="Primary">
   <div class="nav-inner">
-    <a class="brand" href="index.html" aria-label="inGeniti home">
-      <img src="logo-banner.png" alt="inGeniti" onerror="this.onerror=null;this.src='logo-wordmark-light.png';" />
+    <a class="brand" href="index.html#top" aria-label="inGeniti home">
+      <img src="logo-icon.png" alt="inGeniti" onerror="this.onerror=null;this.src='logo-wordmark-light.png';" />
+      <span class="brand-orbit" aria-hidden="true"></span>
+      <span class="brand-orbit brand-orbit--inner" aria-hidden="true"></span>
     </a>
     <a class="nav-cta nav-cta--back" href="index.html">Back to home</a>
   </div>
@@ -726,13 +808,19 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">
-          <img src="logo-wordmark.png" alt="inGeniti" />
+          <img src="logo-wordmark-light.png" alt="inGeniti" onerror="this.onerror=null;this.src='logo-wordmark.png';" />
         </div>
         <p class="footer-tag">Unified energy orchestration. Monitor, control, and optimize any electrical device, anywhere.</p>
         <div class="footer-social">
-          <a class="social-link social-link--linkedin" href="https://www.linkedin.com/company/ingeniti/" target="_blank" rel="noopener" aria-label="LinkedIn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <p class="footer-social-pitch">Follow inGeniti on LinkedIn for product launches, grid news, and a behind-the-scenes look at what we&rsquo;re building next.</p>
+          <a class="social-link social-link--linkedin" href="https://www.linkedin.com/company/ingeniti/" target="_blank" rel="noopener" aria-label="Follow inGeniti on LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
+            </svg>
+            Follow on LinkedIn
+            <svg class="social-link-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
             </svg>
           </a>
         </div>
@@ -756,7 +844,7 @@
       <div class="footer-col">
         <h4>Get the app</h4>
         <div class="app-badges">
-          <a class="app-badge" href="#" aria-label="Download on the App Store">
+          <a class="app-badge" href="https://apps.apple.com/us/app/ingeniti/id6749005310" target="_blank" rel="noopener" aria-label="Download on the App Store">
             <svg class="app-badge-icon" width="22" height="22" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
               <path d="M17.05 12.04c-.03-3.18 2.6-4.7 2.72-4.78-1.48-2.17-3.79-2.46-4.61-2.5-1.96-.2-3.83 1.15-4.83 1.15-1 0-2.54-1.13-4.18-1.1-2.15.03-4.13 1.25-5.24 3.17-2.24 3.88-.57 9.62 1.6 12.77 1.06 1.54 2.32 3.27 3.97 3.21 1.6-.07 2.2-1.04 4.13-1.04 1.93 0 2.47 1.04 4.16 1 1.72-.03 2.81-1.57 3.86-3.12 1.22-1.79 1.72-3.52 1.74-3.61-.04-.02-3.34-1.28-3.37-5.07zM14.4 3.94c.88-1.07 1.48-2.55 1.32-4.04-1.27.05-2.83.85-3.74 1.91-.81.94-1.53 2.45-1.34 3.91 1.42.11 2.87-.72 3.76-1.78z"/>
             </svg>
@@ -765,7 +853,7 @@
               <span class="app-badge-big">App Store</span>
             </span>
           </a>
-          <a class="app-badge" href="#" aria-label="Get it on Google Play">
+          <a class="app-badge" href="https://play.google.com/store/apps/details?id=com.ingeniti.mobile&pcampaignid=web_share" target="_blank" rel="noopener" aria-label="Get it on Google Play">
             <svg class="app-badge-icon" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
               <defs>
                 <linearGradient id="gp-blue-media" x1="0" y1="0" x2="1" y2="1">
