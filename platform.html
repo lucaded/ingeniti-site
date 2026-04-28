@@ -1537,12 +1537,28 @@
   .footer-brand {
     display: inline-block;
     margin-bottom: 20px;
+    position: relative;
+    isolation: isolate;
+  }
+  .footer-brand::before {
+    content: "";
+    position: absolute;
+    inset: -25% -15%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 219, 255, 0.55), rgba(110, 163, 255, 0.25) 40%, transparent 72%);
+    filter: blur(20px);
+    z-index: -1;
+    pointer-events: none;
+    animation: brandAuraPulse 4.6s ease-in-out infinite;
   }
   .footer-brand img {
-    height: 56px;
+    height: 84px;
     width: auto;
     display: block;
+    filter: drop-shadow(0 0 10px rgba(0, 219, 255, 0.55)) drop-shadow(0 0 22px rgba(110, 163, 255, 0.35));
   }
+  .footer-grid > div:first-child { text-align: center; }
+  .footer-grid > div:first-child .footer-social { align-items: center; }
+  .footer-grid > div:first-child .footer-social-pitch { margin-left: auto; margin-right: auto; }
   .footer-tag {
     max-width: 36ch;
     color: var(--ink-2);
@@ -1709,7 +1725,7 @@
   <div class="container">
     <div class="showcase-head" data-reveal>
       <span class="eyebrow">Product</span>
-      <h2 id="product-heading">Operators on web. <span class="serif-em">Customers on mobile.</span></h2>
+      <h2 id="product-heading">Operators on web. <span class="serif-em">Consumers on mobile.</span></h2>
       <p class="body-prose">One platform, two experiences. A utility dispatch console for program managers and a consumer app that gives residents real-time insight and full override authority.</p>
     </div>
     <div class="showcase-grid">
@@ -1948,7 +1964,7 @@
         </div>
       </div>
       <div class="showcase-mobile" data-reveal>
-        <svg viewBox="0 0 450 950" xmlns="http://www.w3.org/2000/svg" aria-label="OPTIMA customer app mockup">
+        <svg viewBox="0 0 450 950" xmlns="http://www.w3.org/2000/svg" aria-label="OPTIMA consumer app mockup">
           <defs>
             <clipPath id="screenClip"><rect x="20" y="20" width="410" height="910" rx="54" ry="54"></rect></clipPath>
             <clipPath id="chartClip"><rect x="44" y="600" width="362" height="112" rx="18" ry="18"></rect></clipPath>
@@ -2116,7 +2132,7 @@
           </g>
         </svg>
         <div class="showcase-caption">
-          <span>Customer app</span>
+          <span>Consumer app</span>
           <span>iOS &amp; Android</span>
         </div>
       </div>
@@ -2201,8 +2217,9 @@
           <img src="logo-wordmark-light.png" alt="inGeniti" onerror="this.onerror=null;this.src='logo-wordmark.png';" />
         </div>
         <p class="footer-tag">Unified energy orchestration. Monitor, control, and optimize any electrical device, anywhere.</p>
+        <a href="index.html#top" class="footer-brand" aria-label="inGeniti home"><img src="logo-icon.png" alt="inGeniti" onerror="this.onerror=null;this.src='logo-wordmark-light.png';" /></a>
         <div class="footer-social">
-          <p class="footer-social-pitch">Follow inGeniti on LinkedIn for product launches, grid news, and a behind-the-scenes look at what we&rsquo;re building next.</p>
+          <p class="footer-social-pitch">Product launches, grid news, and what we&rsquo;re building next.</p>
           <a class="social-link social-link--linkedin" href="https://www.linkedin.com/company/ingeniti/" target="_blank" rel="noopener" aria-label="Follow inGeniti on LinkedIn">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/>
