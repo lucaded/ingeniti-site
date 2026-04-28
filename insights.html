@@ -448,9 +448,9 @@
   .footer-brand { display: inline-block; margin-bottom: 20px; position: relative; isolation: isolate; }
   .footer-brand::before { content: ""; position: absolute; inset: -25% -15%; background: radial-gradient(circle at 50% 50%, rgba(0, 219, 255, 0.55), rgba(110, 163, 255, 0.25) 40%, transparent 72%); filter: blur(20px); z-index: -1; pointer-events: none; animation: brandAuraPulse 4.6s ease-in-out infinite; }
   .footer-brand img { height: 84px; width: auto; display: block; filter: drop-shadow(0 0 10px rgba(0, 219, 255, 0.55)) drop-shadow(0 0 22px rgba(110, 163, 255, 0.35)); }
-  .footer-grid > div:first-child { text-align: center; }
-  .footer-grid > div:first-child .footer-social { align-items: center; }
-  .footer-grid > div:first-child .footer-social-pitch { margin-left: auto; margin-right: auto; }
+  .footer-grid > div:first-child { text-align: left; }
+  .footer-grid > div:first-child .footer-social { align-items: flex-start; }
+  .footer-grid > div:first-child .footer-social-pitch { margin-left: 0; margin-right: 0; }
   .footer-tag {
     max-width: 36ch;
     color: var(--ink-2);
