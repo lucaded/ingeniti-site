@@ -1788,6 +1788,11 @@
     color: var(--ink-2);
     margin-left: 6px;
   }
+  @media (max-width: 600px) {
+    .vp-savings { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .vp-savings-num { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+    .vp-savings-num small { margin-left: 0; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .vp-bar--now .vp-bar-fill { animation: none; }
   }
