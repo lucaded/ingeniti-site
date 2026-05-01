@@ -1076,17 +1076,13 @@
   .hero-sub {
     margin-bottom: 0;
     color: var(--ink-2);
-    font-size: 13px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 62ch;
   }
-  .hero-sub-line {
-    display: block;
-    white-space: nowrap;
-  }
-  @media (min-width: 1024px) { .hero-sub { font-size: 14px; } }
+  .hero-sub-line { display: inline; }
+  .hero-sub-line + .hero-sub-line::before { content: " "; }
   @media (max-width: 600px) {
-    .hero-sub-line { white-space: normal; display: inline; }
-    .hero-sub-line + .hero-sub-line::before { content: " "; }
     .hero-sub { font-size: 15px; line-height: 1.4; }
   }
   .hero-cta {
