@@ -896,6 +896,13 @@
     .optima-card { padding: 26px 22px 22px; }
     .optima-grid { grid-template-columns: 1fr; gap: 20px; }
     .optima-brand-mark { font-size: 24px; }
+    .optima-modes { gap: 6px; margin: 22px 0 22px; }
+    .optima-mode { height: 40px; font-size: 10px; letter-spacing: 0.14em; gap: 6px; }
+    .optima-mode-dot { width: 5px; height: 5px; }
+  }
+  @media (max-width: 380px) {
+    .optima-modes { grid-template-columns: 1fr; }
+    .optima-mode { height: 36px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .optima-mode, .optima-mode .optima-mode-dot, .optima-live::before { animation: none; }
