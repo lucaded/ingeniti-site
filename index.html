@@ -2371,8 +2371,9 @@
     .team-row .person { flex-basis: calc(50% - 16px); max-width: none; }
   }
   @media (max-width: 520px) {
-    .team-row { flex-direction: column; gap: 24px; }
-    .team-row .person { flex-basis: auto; }
+    .team-row { flex-direction: column; gap: 24px; align-items: center; }
+    .team-row .person { flex-basis: auto; width: 100%; max-width: 280px; }
+    .person-sq.upcoming-multi { aspect-ratio: 1 / 1; min-height: 0; }
   }
   .person {
     display: flex;
