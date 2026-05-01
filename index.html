@@ -1084,8 +1084,9 @@
   }
   @media (min-width: 1024px) { .hero-sub { font-size: 14px; } }
   @media (max-width: 600px) {
-    .hero-sub-line { white-space: normal; }
-    .hero-sub { font-size: 20px; line-height: 1.5; }
+    .hero-sub-line { white-space: normal; display: inline; }
+    .hero-sub-line + .hero-sub-line::before { content: " "; }
+    .hero-sub { font-size: 15px; line-height: 1.4; }
   }
   .hero-cta {
     display: flex;
