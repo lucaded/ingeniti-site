@@ -237,6 +237,10 @@
     .hero-title .serif-em { opacity: 1; animation: none; }
     html { scroll-behavior: auto; }
   }
+  @media (max-width: 768px) {
+    [data-reveal] { opacity: 1; transform: none; transition: none; }
+    .hero-title .serif-em { opacity: 1; animation: none; }
+  }
 
   /* SCROLL PROGRESS BAR */
   .scroll-progress { display: none; }
@@ -651,7 +655,11 @@
     border-bottom: 1px solid var(--hairline);
   }
   @media (max-width: 768px) {
-    .hero { padding: calc(64px + 36px + 40px) 0 36px; }
+    .hero { padding: calc(64px + 36px + 24px) 0 32px; }
+  }
+  @media (max-width: 540px) {
+    .hero { padding: calc(64px + 24px) 0 24px; }
+    .hero-grid { gap: 32px; }
   }
   .hero-grid {
     display: grid;
