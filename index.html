@@ -4247,12 +4247,17 @@
       'Type: ' + data.get('type') + '\n\n' +
       'Message:\n' + data.get('message')
     );
-    window.location.href = 'mailto:info@inGeniti.com?subject=' + subject + '&body=' + body;
-    document.getElementById('formSuccess').classList.add('show');
-    setTimeout(function () {
-      form.reset();
-      document.getElementById('formSuccess').classList.remove('show');
-    }, 4000);
+    var mailto = 'mailto:info@inGeniti.com?subject=' + subject + '&body=' + body;
+    var success = document.getElementById('formSuccess');
+    success.classList.add('show');
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(function () { window.location.href = mailto; }, 350);
+    if (!form.dataset.successWired) {
+      form.dataset.successWired = '1';
+      form.addEventListener('input', function () {
+        success.classList.remove('show');
+      });
+    }
     return false;
   }
   window.handleSubmit = handleSubmit;
