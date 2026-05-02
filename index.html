@@ -2338,57 +2338,6 @@
     .walk-body h3 { font-size: 18px; }
   }
 
-  .walk-body--with-mock {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  .walk-body--with-mock > .walk-body-text {
-    flex: 0 1 auto;
-    max-width: 46ch;
-  }
-  .walk-body--with-mock > .walk-body-text p {
-    max-width: none;
-  }
-  .app-mock-row {
-    display: flex;
-    align-items: flex-end;
-    gap: 14px;
-    flex-shrink: 0;
-    margin-left: auto;
-  }
-  .app-mock {
-    position: relative;
-    width: 150px;
-    border-radius: 22px;
-    padding: 5px;
-    background: linear-gradient(155deg, #232838 0%, #0a0d18 100%);
-    box-shadow:
-      0 28px 60px -22px rgba(4, 8, 18, 0.65),
-      0 1px 0 rgba(255, 255, 255, 0.05) inset,
-      0 0 0 1px rgba(255, 255, 255, 0.06) inset;
-  }
-  .app-mock:nth-child(2) { transform: translateY(-14px); }
-  .app-mock img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 18px;
-  }
-  @media (max-width: 980px) {
-    .walk-body--with-mock > .walk-body-text { max-width: 100%; flex-basis: 100%; }
-    .app-mock-row { margin-left: 0; }
-    .app-mock { width: 134px; }
-  }
-  @media (max-width: 720px) {
-    .walk-body--with-mock { gap: 24px; }
-    .app-mock-row { gap: 12px; }
-    .app-mock { width: 104px; padding: 4px; border-radius: 18px; }
-    .app-mock img { border-radius: 14px; }
-    .app-mock:nth-child(2) { transform: translateY(-8px); }
-  }
-
   .walk-cta {
     display: flex;
     justify-content: flex-start;
@@ -3733,16 +3682,9 @@
             <line x1="9" y1="26" x2="19" y2="26" opacity="0.4"/>
           </svg>
         </div>
-        <div class="walk-body walk-body--with-mock">
-          <div class="walk-body-text">
-            <h3>Control from anywhere</h3>
-            <p>Monitor power draw, schedule, and cycle your appliance from the inGeniti app. Unlock advanced grid features when you&rsquo;re ready.</p>
-          </div>
-          <div class="app-mock-row" aria-hidden="true">
-            <div class="app-mock"><img src="app-home.jpg" alt="inGeniti app home" loading="lazy" /></div>
-            <div class="app-mock"><img src="app-monitor.jpg" alt="inGeniti app energy chart" loading="lazy" /></div>
-            <div class="app-mock"><img src="app-schedule.jpg" alt="inGeniti app schedule" loading="lazy" /></div>
-          </div>
+        <div class="walk-body">
+          <h3>Control from anywhere</h3>
+          <p>Monitor power draw, schedule, and cycle your appliance from the inGeniti app. Unlock advanced grid features when you&rsquo;re ready.</p>
         </div>
       </li>
     </ol>
