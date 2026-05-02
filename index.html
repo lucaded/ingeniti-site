@@ -4239,13 +4239,27 @@
     var form = e.target;
     if (!form.checkValidity()) { form.reportValidity(); return false; }
     var data = new FormData(form);
-    var subject = encodeURIComponent('inGeniti inquiry from ' + data.get('name') + ' (' + data.get('company') + ')');
+    var name = (data.get('name') || '').trim();
+    var company = (data.get('company') || '').trim();
+    var email = (data.get('email') || '').trim();
+    var message = (data.get('message') || '').trim();
+    var typeSelect = form.querySelector('select[name="type"]');
+    var typeLabel = typeSelect && typeSelect.selectedIndex >= 0
+      ? typeSelect.options[typeSelect.selectedIndex].text
+      : (data.get('type') || '');
+    var subject = encodeURIComponent('Inquiry from ' + name + ', ' + company);
     var body = encodeURIComponent(
-      'Name: ' + data.get('name') + '\n' +
-      'Organisation: ' + data.get('company') + '\n' +
-      'Email: ' + data.get('email') + '\n' +
-      'Type: ' + data.get('type') + '\n\n' +
-      'Message:\n' + data.get('message')
+      'Dear inGeniti team,\n\n' +
+      message + '\n\n' +
+      'Kind regards,\n' +
+      name + '\n' +
+      company + '\n\n' +
+      '\n' +
+      'Submitted via inGeniti.com\n\n' +
+      'Name: ' + name + '\n' +
+      'Organisation: ' + company + '\n' +
+      'Email: ' + email + '\n' +
+      'You Represent: ' + typeLabel
     );
     var mailto = 'mailto:info@inGeniti.com?subject=' + subject + '&body=' + body;
     var success = document.getElementById('formSuccess');
