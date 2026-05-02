@@ -2338,6 +2338,37 @@
     .walk-body h3 { font-size: 18px; }
   }
 
+  .walk-body--with-mock {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: center;
+  }
+  .app-mock {
+    width: 132px;
+    flex-shrink: 0;
+    border-radius: 22px;
+    padding: 5px;
+    background: linear-gradient(150deg, #1d2230 0%, #080b14 100%);
+    box-shadow:
+      0 18px 40px -16px rgba(8, 12, 24, 0.45),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+  .app-mock img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+  }
+  @media (max-width: 720px) {
+    .walk-body--with-mock {
+      grid-template-columns: 1fr;
+      justify-items: start;
+      gap: 18px;
+    }
+    .app-mock { width: 108px; }
+  }
+
   .walk-cta {
     display: flex;
     justify-content: flex-start;
@@ -3682,9 +3713,14 @@
             <line x1="9" y1="26" x2="19" y2="26" opacity="0.4"/>
           </svg>
         </div>
-        <div class="walk-body">
-          <h3>Control from anywhere</h3>
-          <p>Monitor power draw, schedule, and cycle your appliance from the inGeniti app. Unlock advanced grid features when you&rsquo;re ready.</p>
+        <div class="walk-body walk-body--with-mock">
+          <div>
+            <h3>Control from anywhere</h3>
+            <p>Monitor power draw, schedule, and cycle your appliance from the inGeniti app. Unlock advanced grid features when you&rsquo;re ready.</p>
+          </div>
+          <div class="app-mock" aria-hidden="true">
+            <img src="app-home.jpg" alt="inGeniti app showing connected devices" loading="lazy" />
+          </div>
         </div>
       </li>
     </ol>
